@@ -61,7 +61,7 @@ def start_and_end(coords:tuple):
 #print([next(test_lcg1) for i in range(20)])
 #print([next(test_lcg2) for i in range(20)])
 
-class map:
+class Map:
     def __init__(self,seed_str:str):
         self.seed = seed_str
         self.dimensions = read(self.seed)
@@ -104,10 +104,10 @@ class map:
                         self.exceptions[(tup[0], tup[1] % self.y)] = 1
                     else:
                         self.exceptions[(tup[0], tup[1])] = 1
-                k+=1                    
+                k+=1                  
         #this will change more, will be adjusted later
         #This fucker right here can fuck right the fuck off fuckin g piece of shit fuck shit
-        return self.exceptions
+        #return self.exceptions
 
     def grid_matrix(self):
         """creates the grid matrix"""
