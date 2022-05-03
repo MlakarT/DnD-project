@@ -12,6 +12,8 @@
 
 
 #leave this as is for now, will either define other stuff when it comes up but for now i have 3 seperate model files, one for each thing
+
+# a quick test comment to see if repo works
 import map_generator
 from map_generator import map
 import linear_congruetal_generator as lcg
