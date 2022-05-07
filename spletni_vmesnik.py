@@ -13,7 +13,7 @@ displayed_map.grid_matrix()
 
 @bottle.get('/')
 def osnovni_zaslon():
-    return bottle.template('U:\DnD-project\spletna_stran.tpl',
+    return bottle.template('spletna_stran.tpl',
     standardni_set_kock = kocke.standard_set,
     current_map = Map((generate())),
     seed = displayed_map.seed,
