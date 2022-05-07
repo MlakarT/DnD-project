@@ -20,4 +20,4 @@ Also note that some _(most)_ of the code from the original repository has been r
 #
 
 *if the sections above are empty, that's because i'm gonna update them later
-*if something mentioned in my README.md isn't in the code yet, that's because i either ran out of time or it is way beyond the scope of the project.
+*if something mentioned in my README.md isn't in the code yet, that's because I either ran out of time or it is way beyond the scope of the project.
