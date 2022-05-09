@@ -20,6 +20,8 @@
                         <text x="10" y="70" fill="black" font-size="45" font-family="Lucida Calligraphy">Generate</text>
                     </svg>
                 </div>
+                <div id="input_boxes">
+                </div>
                 <div class="map_display" style="float:right">
                     <svg width="400" height="110">
                         <rect width="300" height="100" style="fill:none;stroke-width:3;stroke:rgb(0,0,0)" />
