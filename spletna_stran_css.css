@@ -1,0 +1,11 @@
+.top_bar{
+    float:left;
+    height: 10%;
+    border: 2px solid black;
+    margin-left: 10px;
+}
+
+#main_title{
+    text-align:center;
+    font-style: monospace;
+}
