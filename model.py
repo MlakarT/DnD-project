@@ -167,7 +167,7 @@ class Map:
                     row.append(self.exceptions[(j,i)])
                 else:
                     row.append(0)
-            print(row)
+            #print(row)
             matrix.append(row)
         self.matrix = matrix.copy()
 
