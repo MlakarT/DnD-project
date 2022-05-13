@@ -91,16 +91,16 @@ def start_and_end(coords:tuple):
     """Calculate starting and ending coordinates based on unique identifier"""
     if coords[3] % 4 == 0: #na vrhu, na desni
         starting_x, starting_y = coords[0] // sum_1(str(coords[3])), 0
-        ending_x, ending_y = coords[0], coords[1] // sum_2(str(coords[3]))
+        ending_x, ending_y = coords[0]-1, (coords[1]-1)// sum_2(str(coords[3]))
     elif coords[3] % 4 == 1: #na levi, na desni
         starting_x, starting_y = 0, coords[1] // sum_1(str(coords[3]))
-        ending_x, ending_y = coords[0], coords[1] // sum_2(str(coords[3]))
+        ending_x, ending_y = coords[0]-1, (coords[1]-1) // sum_2(str(coords[3]))
     elif coords[3] % 4 == 2: #na vrhu, na podnu
         starting_x, starting_y = coords[0] // sum_1(str(coords[3])), 0
-        ending_x, ending_y = coords[0] // sum_2(str(coords[3])),coords[1]
+        ending_x, ending_y = (coords[0]-1) // sum_2(str(coords[3])),coords[1]-1
     elif coords[3] % 4 == 3: #na levi, na podnu
         starting_x, starting_y = 0, coords[1] // sum_1(str(coords[3]))
-        ending_x, ending_y = coords[0] // sum_2(str(coords[3])), coords[1]
+        ending_x, ending_y = (coords[0]-1) // sum_2(str(coords[3])), coords[1]-1
     return starting_x,starting_y,ending_x,ending_y
 
 
@@ -120,6 +120,7 @@ class Map:
         self. length = self.length * self.complexity
         self.lcg = Linear_congruetal_generator.num_rec_lcg(int(self.seed))
         self.lcg_list = [next(self.lcg) for _ in range(self.length)]
+        self.step_list = [i % 4 for i in self.lcg_list]
         self.start_x, self.start_y, self.end_x, self.end_y = start_and_end(self.dimensions)
         self.starting_coords = self.start_x, self.start_y
         self.finish_coords = self.end_x, self.end_y
@@ -135,24 +136,31 @@ class Map:
     def exception_library(self):
         """Creates the positions of ones in the matrix"""
         self.exceptions = {}
-        self.exceptions[self.starting_coords] = 1
-        self.exceptions[self.finish_coords] = 1
+        x_s, y_s = self.starting_coords
         k = 2
         while k <= self.length:
-            for num in self.lcg_list:
-                tup = Linear_congruetal_generator.lcg_read(num)
-                #print(tup)
-                if tup[0] > self.x: #primerja prvo koordinato z sirino
-                    if tup[1] > self.y: #primerja drugo koordinato z visino
-                        self.exceptions[(tup[0] % self.x, tup[1] % self.y)] = 1
-                    else:
-                        self.exceptions[(tup[0] % self.x, tup[1])] = 1
+            for step in self.step_list:
+                if step == 0:
+                    self.exceptions[(x_s+1,y_s)]=1
+                    x_s += 1
+                    k += 1               
+                elif step == 1:
+                    self.exceptions[(x_s, y_s-1)]=1
+                    y_s-=1
+                    k += 1               
+                elif step == 2:
+                    self.exceptions[(x_s-1,y_s)]=1
+                    x_s -= 1
+                    k += 1               
+                elif step == 3:
+                    self.exceptions[(x_s,y_s+1)]=1
+                    y_s += 1
+                    k += 1               
                 else:
-                    if tup[1] > self.y:
-                        self.exceptions[(tup[0], tup[1] % self.y)] = 1
-                    else:
-                        self.exceptions[(tup[0], tup[1])] = 1
-                k+=1                  
+                    return "something went wrong" 
+        self.exceptions[self.starting_coords] = 2
+        self.exceptions[self.finish_coords] = 2
+
         #this will change more, will be adjusted later
         #This fucker right here can fuck right the fuck off fuckin g piece of shit fuck shit
         #return self.exceptions
@@ -237,6 +245,14 @@ class Dice():
 
     def roll_history(self):
         return self.all_rolls if self.all_rolls else 'No history'
+
+
+MAP1 = Map('1208112345')
+print(MAP1.seed, MAP1.x, MAP1.y, MAP1.length, MAP1.starting_coords, MAP1.finish_coords, MAP1.step_list)
+MAP1.exception_library()
+MAP1.grid_matrix()
+for row in MAP1.matrix:
+    print (row)
 
 STANDARDNI_SET = {'d100' : Dice(100),
         'd20': Dice(20),

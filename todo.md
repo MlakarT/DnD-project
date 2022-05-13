@@ -1,4 +1,5 @@
-# TO DO LIST:
+# TO DO LIST
+
 - will probably be updated later
 - initialize git on home pc ✅
 - re-learn html and css
