@@ -2,6 +2,18 @@
 <html>
     <head>
         <title>D&D Map Generator</title>
+        <style>
+            .grid_cell{
+                background-color: white;
+                border: 2px solid black;
+                color: white;
+            }
+            .platform{
+                background-color: black;
+                border: 2px solid black;
+                font-family: monospace;
+            }
+        </style>
         <link type="text/css" rel="stylesheet" href="spletna_stran_css.css"/>
     </head>
     <body>
@@ -11,6 +23,23 @@
             </div>
             <div id="search_bar">
                 <input type="text" id="sreach_querry" name="search_querry">
+            </div>
+        </div>
+        <div class="map">
+            <div id="map_display">
+                <table>
+                    %for j in grid:
+                        <tr>
+                        %for i in j:
+                            %if i == 1:
+                            <td class="platform"> 1 </td>
+                            %else:
+                            <td class="grid_cell"> 0 </td>
+                            %end
+                        %end
+                        </tr>
+                    %end
+                </table>
             </div>
         </div>
     </body>
