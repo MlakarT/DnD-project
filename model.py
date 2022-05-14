@@ -14,11 +14,8 @@
 #Numerical Recipies generator: https://en.wikipedia.org/wiki/Numerical_Recipes
 #Virtual Pascal generator: https://en.wikipedia.org/wiki/Virtual_Pascal
 #for the purposes of the matrix generation, the Numerical Recipies generator was used. 
-from ast import excepthandler
 import random as rd
 import time
-
-from numpy import take
 
 #stuff to do with the linear congruetal generator and pseudo-randomness
 
@@ -106,7 +103,7 @@ def start_and_end(coords:tuple):
         ending_x, ending_y = (coords[0]-1) // sum_2(str(coords[3])), coords[1]-1
     return starting_x,starting_y,ending_x,ending_y
 
-
+UNAV = 'unavailable'
 
 #test_lcg1 = lcg(2 ** 32,1664525,1013904223,int(generate())) #testing lcg type NUMERICAL RECIPIES at https://en.wikipedia.org/wiki/Numerical_Recipes
 #test_lcg2 = lcg(2 ** 32, 134775813, 1, int(generate())) at https://en.wikipedia.org/wiki/Virtual_Pascal
@@ -128,6 +125,9 @@ class Map:
         self.start_x, self.start_y, self.end_x, self.end_y = start_and_end(self.dimensions)
         self.starting_coords = self.start_x, self.start_y
         self.finish_coords = self.end_x, self.end_y
+        self.exceptions = {
+            self.starting_coords : 2
+        }
         #print(self.seed, self.dimensions, self.length)
 
     def __repr__(self) -> str:
@@ -141,57 +141,45 @@ class Map:
         """Takes provided step regardless of condition"""
         x,y = location
         if step == 0:
-            new_location = (x+1,y)
+            return (x+1,y)
         elif step == 1:
-            new_location = (x,y+1)
+            return (x,y-1)
         elif step == 2:
-            new_location = (x-1,y)
+            return (x-1,y)
         elif step == 3:
-            new_location = (x,y-1)
-        return new_location
+            return (x,y+1)
+        else:
+            return UNAV
 
     @staticmethod
     def check_sq(exception_dict:dict, location:tuple) -> bool:
-        """Checks if any squares have been placed in or directly next to the spot, where the step is trying to place the square"""
+        """Checks if any squares have been placed in or directly next to the spot, where the step is trying to place the square, or if there is a border where the square is trying to be placed"""
         x,y = location
-        total_faults = 0
+        adj_faults = 0
+        #teli delajo okej
         if (x+1,y) in exception_dict:
-            total_faults += 1
+            adj_faults += 1
         if (x-1,y) in exception_dict:
-            total_faults += 1
+            adj_faults += 1
         if (x,y+1) in exception_dict:
-                    total_faults += 1
+            adj_faults += 1
         if (x,y-1) in exception_dict:
-                    total_faults += 1
-        return total_faults <= 1
+            adj_faults += 1
+        return adj_faults <= 1
 
     @staticmethod
-    def try_directions(exception_dict:dict, location:tuple, step:int):
-        """Step variable indicated attempted step"""
-        x,y = location
-        if step == 0 or step == 2:
-            if Map.check_sq(exception_dict, (x,y+1)): #check if you can go up first
-                return Map.take_step ((x,y), 1)
-            elif Map.check_sq(exception_dict, (x,y-1)): #then check if you can go down
-                return Map.take_step((x,y),3)
-            else:
-                return "Fatal error, check code"
-        elif step == 1 or step == 3:
-            if Map.check_sq(exception_dict, (x+1,y)):
-                return Map.take_step((x,y),0)
-            elif Map.check_sq(exception_dict, (x-1,y)):
-                return Map.take_step((x,y),2)
-            else: return "Fatal error, check code"
+    def try_directions(exception_dict:dict, location:tuple):
+        """Return next available step"""
+        for step in range(4):
+            new_loc = Map.take_step(location, step)
+            if new_loc not in exception_dict and Map.check_sq(exception_dict, new_loc):
+                return step
+        return 'No available steps'
     
-
-
     def exception_library(self):
         """Creates the positions of ones in the matrix"""
-        self.exceptions = {}
-        self.exceptions[self.starting_coords] = 2
-        self.exceptions[self.finish_coords] = 2
         x_s, y_s = self.starting_coords
-        k = 2
+        k = 1
         while k <= self.length:
             for step in self.step_list:
                 # x_s, y_s = take_step((x_s,y_s), step)
@@ -199,43 +187,87 @@ class Map:
                 # k += 1
                 if step == 0:
                     if Map.check_sq(self.exceptions,(x_s+1,y_s)):
-                        x_s,y_s = Map.take_step((x_s,y_s),0)
-                        self.exceptions[(x_s,y_s)] = 1
-                        k+=1
+                        if x_s+1 < self.x:
+                            x_s,y_s = Map.take_step((x_s,y_s),0)
+                            self.exceptions[(x_s,y_s)] = 1
+                            k+=1
+                        else:
+                            step = Map.try_directions(self.exceptions,(x_s,y_s))
+                            if Map.take_step((x_s,y_s),step) != UNAV:
+                                x_s,y_s = Map.take_step((x_s,y_s),step)
+                                self.exceptions[(x_s,y_s)] = 1
+                                k += 1
+                            else:break
                     else:
-                        x_s,y_s = Map.try_directions(self.exceptions, (x_s,y_s),0)
-                        self.exceptions[(x_s,y_s)] = 1
-                        k+=1
+                        step = Map.try_directions(self.exceptions,(x_s,y_s))
+                        if Map.take_step((x_s,y_s),step) != UNAV:
+                            x_s,y_s = Map.take_step((x_s,y_s),step)
+                            self.exceptions[(x_s,y_s)] = 1
+                            k += 1
+                        else:break
                 elif step == 1:
-                    if Map.check_sq(self.exceptions,(x_s,y_s+1)):
-                        x_s,y_s = Map.take_step((x_s,y_s),1)
-                        self.exceptions[(x_s,y_s)] = 1
-                        k+=1
+                    if Map.check_sq(self.exceptions,(x_s,y_s-1)):
+                        if y_s-1 >= 0:
+                            x_s,y_s = Map.take_step((x_s,y_s),1)
+                            self.exceptions[(x_s,y_s)] = 1
+                            k+=1
+                        else:
+                            step = Map.try_directions(self.exceptions,(x_s,y_s))
+                            if Map.take_step((x_s,y_s),step) != UNAV:
+                                x_s,y_s = Map.take_step((x_s,y_s),step)
+                                self.exceptions[(x_s,y_s)] = 1
+                                k += 1
+                            else:break
                     else:
-                        x_s,y_s = Map.try_directions(self.exceptions, (x_s,y_s),1)
-                        self.exceptions[(x_s,y_s)] = 1
-                        k+=1              
+                        step = Map.try_directions(self.exceptions,(x_s,y_s))
+                        if Map.take_step((x_s,y_s),step) != UNAV:
+                            x_s,y_s = Map.take_step((x_s,y_s),step)
+                            self.exceptions[(x_s,y_s)] = 1
+                            k += 1
+                        else:break             
                 elif step == 2:
                     if Map.check_sq(self.exceptions,(x_s-1,y_s)):
-                        x_s,y_s = Map.take_step((x_s,y_s),2)
-                        self.exceptions[(x_s,y_s)] = 1
-                        k+=1
+                        if x_s-1 >= 0:
+                            x_s,y_s = Map.take_step((x_s,y_s),2)
+                            self.exceptions[(x_s,y_s)] = 1
+                            k+=1
+                        else:
+                            step = Map.try_directions(self.exceptions,(x_s,y_s))
+                            if Map.take_step((x_s,y_s),step) != UNAV:
+                                x_s,y_s = Map.take_step((x_s,y_s),step)
+                                self.exceptions[(x_s,y_s)] = 1
+                                k += 1
+                            else:break
                     else:
-                        x_s,y_s = Map.try_directions(self.exceptions, (x_s,y_s),2)
-                        self.exceptions[(x_s,y_s)] = 1
-                        k+=1               
+                        step = Map.try_directions(self.exceptions,(x_s,y_s))
+                        if Map.take_step((x_s,y_s),step) != UNAV:
+                            x_s,y_s = Map.take_step((x_s,y_s),step)
+                            self.exceptions[(x_s,y_s)] = 1
+                            k += 1
+                        else:break               
                 elif step == 3:
-                    if Map.check_sq(self.exceptions,(x_s,y_s-1)):
-                        x_s,y_s = Map.take_step((x_s,y_s),3)
-                        self.exceptions[(x_s,y_s)] = 1
-                        k+=1
+                    if Map.check_sq(self.exceptions,(x_s,y_s+1)):
+                        if y_s+1 < self.y:
+                            x_s,y_s = Map.take_step((x_s,y_s),3)
+                            self.exceptions[(x_s,y_s)] = 1
+                            k+=1
+                        else:
+                            step = Map.try_directions(self.exceptions,(x_s,y_s))
+                            if Map.take_step((x_s,y_s),step) != UNAV:
+                                x_s,y_s = Map.take_step((x_s,y_s),step)
+                                self.exceptions[(x_s,y_s)] = 1
+                                k += 1
+                            else:break  
                     else:
-                        x_s,y_s = Map.try_directions(self.exceptions, (x_s,y_s),3)
-                        self.exceptions[(x_s,y_s)] = 1
-                        k+=1              
+                        step = Map.try_directions(self.exceptions,(x_s,y_s))
+                        if Map.take_step((x_s,y_s),step) != UNAV:
+                            x_s,y_s = Map.take_step((x_s,y_s),step)
+                            self.exceptions[(x_s,y_s)] = 1
+                            k += 1
+                        else:break                
                 else:
                     return "something went wrong" 
-
+        self.exceptions[(x_s,y_s)] = 2
         #this will change more, will be adjusted later
         #This fucker right here can fuck right the fuck off fuckin g piece of shit fuck shit
         #return self.exceptions
@@ -256,8 +288,6 @@ class Map:
 
 #done
 # Code for anything to do with the dice
-
-
 class Dice():
     """Prejme število in ustvari n-strano kocko."""
     def __init__(self,dice:int):
@@ -322,15 +352,16 @@ class Dice():
         return self.all_rolls if self.all_rolls else 'No history'
 
 
-MAP1 = Map('1209112345')
-print(MAP1.seed, MAP1.x, MAP1.y, MAP1.length, MAP1.starting_coords, MAP1.finish_coords, MAP1.step_list)
-MAP1.exception_library()
-print( MAP1.exceptions)
-MAP1.grid_matrix()
-for row in MAP1.matrix:
-    print (row)
+#MAP1 = Map('1208112345')
+# MAP1 = Map(generate())
+# print(MAP1,'MAP1', MAP1.seed, MAP1.x, MAP1.y, MAP1.length, MAP1.starting_coords, MAP1.finish_coords, MAP1.step_list)
+# MAP1.exception_library()
+# print( MAP1.exceptions)
+# MAP1.grid_matrix()
+# for row in MAP1.matrix:
+#     print (row)
 
-STANDARDNI_SET = {'d100' : Dice(100),
+STANDARD_SET = {'d100' : Dice(100),
         'd20': Dice(20),
         'd12': Dice(12),
         'd10': Dice(10),

@@ -8,3 +8,5 @@
 - make bottle actually accept my goddamn css file
 - make bottle display the map
 - edit map generator so it actually does what i want it to do
+
+<!-- doign this rn -->
