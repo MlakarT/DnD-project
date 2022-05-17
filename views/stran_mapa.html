@@ -1,0 +1,19 @@
+% rebase('predloga.html', zavihek='map_seed')
+
+<div class="map">
+    <div id="map_display">
+        <table>
+            %for j in grid:
+                <tr>
+                %for i in j:
+                    %if i == 1:
+                    <td class="platform"> 1 </td>
+                    %else:
+                    <td class="grid_cell"> 0 </td>
+                    %end
+                %end
+                </tr>
+            %end
+        </table>
+    </div>
+</div>
