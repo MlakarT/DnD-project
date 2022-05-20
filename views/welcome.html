@@ -1,4 +1,9 @@
-% rebase('views\predloga.html')
-<button class="funky_text big_title"><a href="../views/stran_mapa.html">Welcome</a></button>
+<!DOCTYPE html>
+% rebase('views\predloga.html', zavihek='welcome')
+<div id="start-display">
+    <form method="POST" action="/display-map/">
+    <input type="text" id="seed" name="seed" class="custom" minlength="10" maxlength="10" size="20" placeholder="Enter seed to begin!">
+    </form>
+</div>
 
 

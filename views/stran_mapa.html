@@ -1,13 +1,16 @@
-% rebase('predloga.html', zavihek='map_seed')
+<!DOCTYPE html>
+% rebase('predloga.html', zavihek='stran_mapa', seed='map_seed')
 
-<div class="map">
-    <div id="map_display">
+<div>
+    <div id="map">
         <table>
             %for j in grid:
                 <tr>
                 %for i in j:
                     %if i == 1:
                     <td class="platform"> 1 </td>
+                    %elif i == 2:
+                    <td class="beginend-platform"> 2 </td>
                     %else:
                     <td class="grid_cell"> 0 </td>
                     %end

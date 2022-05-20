@@ -1,36 +1,71 @@
 <!DOCTYPE html>
+% zavihki = [
+%    'welcome',
+%    'stran_mapa',
+%    'stran_shared',
+% ]
+% zavihki = {
+%    'welcome' : 'Welcome page',    
+%    'stran_mapa' : 'Map display',
+%    'stran_shared' : 'Browse shared'
+% }
+
 <html>
     <head>
-        %if defined('zavihek'):
-        <title>Map: {{zavihek}}</title>
+        %if defined('map_seed'):
+        <title>Map {{map_seed}}</title>
+        %elif defined('zavihek'):
+        <title>{{zavihki[zavihek]}}</title>
         %else:
         <title>D&D Map Generator</title>
-        <style>
-            .grid_cell{
-                background-color: white;
-                border: 2px solid black;
-                color: white;
-            }
-            .platform{
-                background-color: black;
-                border: 2px solid black;
-                font-family: monospace;
-            }
-            </style>
+        %end
         <link type="text/css" rel="stylesheet" href="/static/dopolnila.css"/>
-        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"/>
         <!-- <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
     </head>
     <body>
-        <nav id="top_bar">
-            <div id="main_title">
-                <h1 >D&D Map Generator</h1>
-            </div>
+        <div class="top-bar">
+            <div id="main_title"><a class="not-underlined" href="/">
+                <h1>D&D Map Generator</h1>
+            </a></div>
+            <nav>
             <div id="search_bar">
-                <input type="text" id="sreach_querry" name="search_querry">
+                    <input type="text" id="sreach_querry" name="search_querry" placeholder="Search..." size="129">
+                </div>
+            </nav>
+            <div id="user">
+                <span></span>
+                <p>user@email</p>
+                <p><strong>saves</strong></p>
+                <p>everything else</p>
             </div>
-        </nav>
+        </div>
+        <div id="sidebar-left" class="sidebar">
+            <div id="generate-button">
+                <form action="/display-random/" method="POST">
+                    <button> Generate random map</button>
+                </form>
+            </div>
+            <br><br>
+            <p>seed</p>
+            <p>l</p>
+            <p>h</p>
+            <p>c</p>
+            <div id="assets">
+                <h3>assets</h3>
+                <br>
+                <p>select</p>
+                <p>import</p>
+            </div>
+        </div>
+        <div id="sidebar-right" class="sidebar">
+            <div id="character">
+                <h2>user character</h2>
+            </div>
+            <div id="dice">
+                dice somewhere here
+            </div>
+        </div>
         <div class="section">
             {{!base}}
         </div>

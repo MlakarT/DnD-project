@@ -5,22 +5,44 @@
 .funky_text {
     font-family: Luminari;
 }
-#top_bar {
-    position: fixed;
-    top: 0;
+.top-bar {
     width: 100%;
-    height: 10%;
-    margin: right 1em;
-    text-align: center;
+    height: 8em;
+    border: 2px dotted gray;
+    font-family: Luminari, monospace;
+}
+.sidebar{
+    height: 45em;
+    width: 15%;
+    border: 2px dotted gray;
+    font-family: Luminari, monospace;
+}
+.section {
+    width: 60em;
+    height:40em;
+    margin: 5%;
+    margin-top:2%;
+    float:left;
+    border:2px solid black
+}
+.big_title{
+    position: relative;
+    width : 50%;
+    height: 50%;
+    margin-top: 30%;
+    margin-left: 30%;
+}
+.not-underlined{
+    text-decoration: none;
+    color: black;
 }
 
 #main_title {
     width: 20%;
-    float:left;
-    font-family: Luminari, monospace;
-    border: 2px solid black;
-    padding-top: 0.3em;
-    padding-bottom: 0.3em;
+    height: 90%;
+    float: left;
+    border: 2px solid black
+
 }
 
 #search_bar {
@@ -29,20 +51,49 @@
     float: left;
     margin-left: 20px;
     margin-top: 54px;
-    border: 2px inset gray;
     font-family: monospace;
     text-align: left;
 }
 
-
-.big_title{
-    position: relative;
-    margin-top: 30%;
-    margin-left: 30%;
+#user {
+    height: 90%;
+    width: 20%;
+    float:right;
+    border: 2px inset gray;
+    font-family: monospace;
+    text-align: center;
+}
+#sidebar-left{
+    float: left;
 }
 
+#sidebar-right{
+    float:right;
+}
+#start-display{
+    margin-left: 23em;
+    margin-top: 19em;
+}
 #map {
-    margin-top: 13%;
-    margin-left: 2%;
+    width : 960px;
+    height : 640px;
     float:left;
+}
+
+.grid_cell{
+    background-color: white;
+    border: 2px solid black;
+    color: white;
+}
+.platform{
+    background-color: black;
+    border: 2px solid black;
+    font-family: monospace;
+}
+
+.beginend-platform{
+    background-color: red;
+    border: 2px solid black;
+    font-family: monospace;
+
 }

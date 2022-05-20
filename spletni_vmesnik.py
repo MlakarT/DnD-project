@@ -4,10 +4,9 @@ import model
 from model import generate
 from model import Map
 
-displayed_map = Map(model.generate())
-displayed_map.exception_library()
-displayed_map.grid_matrix()
-width, heigth = displayed_map.x, displayed_map.y
+def url_mape(seed:int):
+    """Turn seed into map url of the form '/map/xxxxxxxxxx'"""
+    return f"/map/{seed}"
 
 @bottle.get('/static/<ime_dat:path>')
 def server_static(ime_dat):
@@ -19,25 +18,31 @@ def osnovni_zaslon():
     bottle.redirect('/welcome_page/')
 
 @bottle.get('/welcome_page/')
-def display_map():
+def display_welcome():
     return bottle.template('views\welcome.html')
-    
+
 @bottle.get('/map/<map_seed:int>')
 def display_map(map_seed:int):
-    return bottle.template('views\stran_mapa', grid=[[1,1],[1,1]])
-    # standardni_set_kock = model.STANDARD_SET,
-    # current_map = displayed_map,
-    # seed = displayed_map.seed,
-    # x = width, y = heigth,
-    # grid = displayed_map.matrix)
+    if map_seed == 0:
+        grid = [[]]
+        return bottle.template('views/stran_mapa', grid = grid)
+    else:
+        map = Map(str(map_seed))
+        map.exception_library()
+        map.grid_matrix()
+        return bottle.template('views/stran_mapa', map_seed = map.seed, grid = map.matrix)
 
-# @bottle.route('/static/spletna_stran_css.css')
-# def server_static(datoteka):
-#     return static_file(datoteka, root='spletna_stran_css.css')
+@bottle.post('/display-map/')
+def display_requested():
+    seed = bottle.request.forms.getunicode("seed")
+    url = url_mape(seed)
+    bottle.redirect(url)
 
-# @bottle.get('/map/<map_seed:int>')
-# def zaslon_mapa(map_seed):
-#     return bottle.template('views\stran_mapa.html')
+@bottle.post('/display-random/')
+def display_random():
+    seed = int(model.generate())
+    url = url_mape(seed)
+    bottle.redirect(url)
 
 @bottle.error(404)
 def error404(error):
