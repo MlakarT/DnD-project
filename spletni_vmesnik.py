@@ -5,7 +5,7 @@ from bottle import error
 import model
 from model import Map
 
-displayed_map = Map('1208112345')
+displayed_map = Map(model.generate())
 displayed_map.exception_library()
 displayed_map.grid_matrix()
 width, heigth = displayed_map.x, displayed_map.y
