@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
     <head>
+        %if defined('zavihek'):
+        <title>Map: {{zavihek}}</title>
+        %else:
         <title>D&D Map Generator</title>
         <style>
             .grid_cell{
@@ -13,34 +16,23 @@
                 border: 2px solid black;
                 font-family: monospace;
             }
-        </style>
-        <link type="text/css" rel="stylesheet" href="spletna_stran_css.css"/>
+            </style>
+        <link type="text/css" rel="stylesheet" href="/static/dopolnila.css"/>
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"/>
+        <!-- <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
     </head>
     <body>
-        <div class="top_bar">
+        <nav id="top_bar">
             <div id="main_title">
                 <h1 >D&D Map Generator</h1>
             </div>
             <div id="search_bar">
                 <input type="text" id="sreach_querry" name="search_querry">
             </div>
-        </div>
-        <div class="map">
-            <div id="map_display">
-                <table>
-                    %for j in grid:
-                        <tr>
-                        %for i in j:
-                            %if i == 1:
-                            <td class="platform"> 1 </td>
-                            %else:
-                            <td class="grid_cell"> 0 </td>
-                            %end
-                        %end
-                        </tr>
-                    %end
-                </table>
-            </div>
+        </nav>
+        <div class="section">
+            {{!base}}
         </div>
     </body>
 </html>
