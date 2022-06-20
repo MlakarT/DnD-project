@@ -9,9 +9,21 @@
 - make bottle display the map ✅
 - edit map generator so it actually does what i want it to do - almost ✅
 - add functionality to buttons on left sidebar
-- addidice and character sheet in right sidebar
-- make the website **not crash every 2 milliseconds**
+- add dice and character sheet in right sidebar ✅
+- make the website **not crash every 2 milliseconds** ✅
+- fix login
+- fix dice
+- refer to notes in notes app for more work
+- found random bug in code, try to fix
 
 <!-- doign this rn -->
 
 - use [this css file](https://www.w3schools.com/w3css/4/w3.css) as ref
+
+## Cool or wierd seeds i found whilst testing
+
+- 1208112345 - usual starting seed for testing purposes
+- 0822262565 - snake
+- 4310582139 - buggy map
+- 4942**20**45542 - nonstandard map with complexity 20, might play around with that idea
+- 4714**8**86210 - same thing, complexity 8

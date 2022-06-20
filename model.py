@@ -15,7 +15,9 @@
 #Virtual Pascal generator: https://en.wikipedia.org/wiki/Virtual_Pascal
 #for the purposes of the matrix generation, the Numerical Recipies generator was used. 
 import random as rd
-import time
+import json
+from dataclasses import dataclass
+from typing import List
 
 #stuff to do with the linear congruetal generator and pseudo-randomness
 
@@ -280,14 +282,13 @@ class Map:
                     row.append(self.exceptions[(j,i)])
                 else:
                     row.append(0)
-            #print(row)
             matrix.append(row)
         self.matrix = matrix.copy()
 
 #done
 # Code for anything to do with the dice
 class Dice():
-    """Prejme število in ustvari n-strano kocko."""
+    """Creates n-sided die."""
     def __init__(self,dice:int):
         self.sides = dice
         self.all_rolls = []
@@ -297,65 +298,149 @@ class Dice():
 
     def __str__(self) -> str:
         return f'd{self.sides}'
-        
-    #This one should be in the front end code, will be moved later.
+    
     @staticmethod
-    def random_numbers(num:int, secs:float=1, interval:float=0.1):
-        """Shows random numbers in the range of the dice rolled, every @interval seconds for @secs seconds."""
-        time_end = time.time() + secs
-        while time.time() < time_end:
-            print(rd.randint(1,num))
-            time.sleep(interval)
-
-    @staticmethod
-    def roll(sides:int,num_off_rolls:int =1):
-        """Rolls @sides sided dice @num_of_rolls times, with @time_between_rolls seconds passing between each roll. Prints out the numbers."""
+    def roll(sides:int, num_of_rolls:int =1):
+        """Rolls @sides sided dice @num_of_rolls times."""
         i = 1
         rolls = []
-        while i <= num_off_rolls:
+        while i <= num_of_rolls:
             rolled = rd.randint(1,sides)
             rolls.append(rolled)
             i += 1
         return rolls
-
-    @staticmethod
-    def simulate_roll(sides:int,rolls:list,time_between_rolls:int=0.5):
-        i = 1
-        while i <= len(rolls):
-            print('Rolling...')
-            Dice.random_numbers(sides,0.5)
-            rolled = rolls[i-1]
-            print('Rolled:', rolled)
-            if i != len(rolls):
-                time.sleep(time_between_rolls)
-            i += 1
-    def __call__(self,num_of_rolls:int =1, time_between_rolls:int=0.5):
-        """Call na kocko vrže kocko @num_of_rolls krat, vmes počaka @time_between_rolls sekund."""
+    
+    def __call__(self, num_of_rolls:int =1):
         rolls = Dice.roll(self.sides, num_of_rolls)
         self.all_rolls.extend(rolls)
-        return Dice.simulate_roll(self.sides, rolls, time_between_rolls)
+        return rolls
 
-    def fast_roll(self,num_of_rolls:int=1):
-        """Naredi podobno, le da samo naprinta vržene vrednosti."""
-        i = 1
-        rolls = []
-        while i <= num_of_rolls:
-            rolls.append(rd.randint(1,self.sides))
-            i += 1
-        self.all_rolls.extend(rolls)
-        for i in rolls:
-            print('Rolled:', i)
+    # #This one should be in the front end code, will be moved later.
+    # @staticmethod
+    # def random_numbers(num:int, secs:float=1, interval:float=0.1):
+    #     """Shows random numbers in the range of the dice rolled, every @interval seconds for @secs seconds."""
+    #     time_end = time.time() + secs
+    #     while time.time() < time_end:
+    #         print(rd.randint(1,num))
+    #         time.sleep(interval)
+
+    # @staticmethod
+    # def roll(sides:int,num_off_rolls:int =1):
+    #     """Rolls @sides sided dice @num_of_rolls times, with @time_between_rolls seconds passing between each roll. Prints out the numbers."""
+    #     i = 1
+    #     rolls = []
+    #     while i <= num_off_rolls:
+    #         rolled = rd.randint(1,sides)
+    #         rolls.append(rolled)
+    #         i += 1
+    #     return rolls
+
+    # @staticmethod
+    # def simulate_roll(sides:int,rolls:list,time_between_rolls:int=0.5):
+    #     i = 1
+    #     while i <= len(rolls):
+    #         print('Rolling...')
+    #         Dice.random_numbers(sides,0.5)
+    #         rolled = rolls[i-1]
+    #         print('Rolled:', rolled)
+    #         if i != len(rolls):
+    #             time.sleep(time_between_rolls)
+    #         i += 1
+    # def __call__(self,num_of_rolls:int =1, time_between_rolls:int=0.5):
+    #     """Call na kocko vrže kocko @num_of_rolls krat, vmes počaka @time_between_rolls sekund."""
+    #     rolls = Dice.roll(self.sides, num_of_rolls)
+    #     self.all_rolls.extend(rolls)
+    #     return Dice.simulate_roll(self.sides, rolls, time_between_rolls)
+
+    # def fast_roll(self,num_of_rolls:int=1):
+    #     """Naredi podobno, le da samo naprinta vržene vrednosti."""
+    #     i = 1
+    #     rolls = []
+    #     while i <= num_of_rolls:
+    #         rolls.append(rd.randint(1,self.sides))
+    #         i += 1
+    #     self.all_rolls.extend(rolls)
+    #     for i in rolls:
+    #         print('Rolled:', i)
 
     def roll_history(self):
         return self.all_rolls if self.all_rolls else 'No history'
+class Game:
+    pass #To be implemented later
+@dataclass
+class User:
+    username: str
+    password: str
+    display_name: str
+    #user_character: None
+    #user_role: None
+    displayed_map: int
+    maps: list
+    rolls: list
+
+    def add_rolls(self, rolled:list):
+        self.rolls.extend(rolled)
+
+    def to_dict(self):
+        return {
+            "username" : self.username,
+            "password" : self.password,
+            "nickname" : self.display_name,
+            "current_displayed_map" : self.displayed_map,
+            "saved_maps" : self.maps,
+            "roll_history" : self.rolls
+        }
+
+    @classmethod
+    def from_dict(cls,slovar):
+        return cls(
+            username = slovar["username"],
+            password = slovar["password"],
+            display_name = slovar["nickname"],
+            displayed_map = slovar["current_displayed_map"],
+            maps = slovar["saved_maps"],
+            rolls = slovar["roll_history"]
+        )
+
+@dataclass
+class Control:
+    #temporarily copying this to see what i can do with it
+    #because im kinda stuck
+    users: List[User]
+
+    def find_user(self, username, password=None):
+        for user in self.users:
+            if user.username == username:
+                if password is None or user.password:
+                    return user
+    
+    def to_dict(self):
+        return {
+            "users" : [user.to_dict() for user in self.users]
+        }
+
+    @classmethod
+    def from_dict(cls, slovar):
+        return cls(
+            users=[User.from_dict(d) for d in slovar["users"]]
+        )
+
+    def to_file(self, filename):
+        with open(filename, "w") as file:
+            json.dump(self.to_dict(), file, ensure_ascii=False, indent=4)
+
+    @classmethod
+    def from_file(cls, filename):
+        with open(filename) as file:
+            return cls.from_dict(json.load(file))
 
 
-MAP1 = Map('1208112345')
+#MAP1 = Map('1208112345')
 # MAP1 = Map(generate())
-print(MAP1,'MAP1', MAP1.seed, MAP1.x, MAP1.y, MAP1.length, MAP1.starting_coords, MAP1.finish_coords, MAP1.step_list)
-MAP1.exception_library()
+#print(MAP1,'MAP1', MAP1.seed, MAP1.x, MAP1.y, MAP1.length, MAP1.starting_coords, MAP1.finish_coords, MAP1.step_list)
+#MAP1.exception_library()
 # print( MAP1.exceptions)
-MAP1.grid_matrix()
+#MAP1.grid_matrix()
 # for row in MAP1.matrix:
 #     print (row)
 
@@ -368,3 +453,6 @@ STANDARD_SET = {'d100' : Dice(100),
         'd4': Dice(4),
         'd3': Dice(3),
         'd2': Dice(2)}
+
+test_user = User("mlakar", "pass", "mlakar", 1208112345, [],[1,1,1,1])
+test_control = Control(users=[test_user])
