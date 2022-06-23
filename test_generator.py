@@ -71,7 +71,7 @@ class Map:
         for i in range(self.length-1):
             #tukej podas mozne korake
             pos_steps = possible_steps((x,y))
-            k = koraki[i] #kle pogledas ce gres loh najprj unga k je v korakih
+            k = koraki[i] #kle pogledas ce gres loh najprj unga k je v korakih #this feels evil
             while pos_steps:
                 step = pos_steps[k]
                 if self.check_step(step,self.path):
@@ -82,7 +82,7 @@ class Map:
                     #vzames prvega
                 else:
                     pos_steps.remove(step)
-                    k = 0 #evil hack for trying step
+                    k = 0
                     #ce ni ok ga vrzes vn probas dalje tapruga od unh k so ostal
         self.path[x,y] = 3
         return self.path
