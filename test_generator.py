@@ -10,7 +10,7 @@ STEPS = {
     1: (0,1),
     3: (0,-1),
 }
-#for testing purposes
+
 def generate_seed(c:int = None) -> tuple:
     x = rd.randint(3,50)
     y = rd.randint(2,50)
@@ -41,12 +41,14 @@ class Map:
         if self.unique_id % 2 == 0:
             self.starting_x, self.starting_y = int(self.width * sqrt(self.complexity / num)), 0
         elif self.unique_id % 2 == 1:
-            self.starting_x, self.starting_y = 0, int(self.width * sqrt(self.complexity / num))
+            self.starting_x, self.starting_y = 0, int(self.height * sqrt(self.complexity / num))
 
     def calc_length(self) -> int:
         num = sum(int(i) for i in str(self.unique_id))
+        print(num)
         self.length = int((self.width + self.height + num) * sqrt(self.complexity))
-    
+        print(self.length)
+
     def prefered_steps(self) -> list:
         cifre = lcg.num_rec_lcg(int(self.seed))
         sez_cifr = [next(cifre) for _ in range(self.length)]
@@ -105,7 +107,7 @@ def draw_map(map:Map) -> None:
 """Sample code for testing purposes"""
 x,y,c,ui = generate_seed()
 #x,y,c,ui = 49, 42, 20, 45542
-#x,y,c,ui = 12,8,1,12345
+#x,y,c,ui = 39,11,6,76935
 SAMPLE_MAP_1 = Map(x,y,c,ui)
 SAMPLE_MAP_1.make_seed()
 SAMPLE_MAP_1.calc_start()

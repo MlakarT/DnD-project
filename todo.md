@@ -27,3 +27,4 @@
 - 4310582139 - buggy map
 - 4942**20**45542 - nonstandard map with complexity 20, might play around with that idea
 - 4714**8**86210 - same thing, complexity 8
+- 925355714 - decided to **for now** switch complexity from 1-5 to 1-9, as it works better with the current generator
