@@ -81,7 +81,7 @@ class Control:
     @classmethod
     def from_dict(cls, slovar):
         return cls(
-            users=[User.from_dict(d) for d in slovar["users"]]
+            users=[User.from_dict(d) for d in slovar.keys()]
         )
 
     def to_file(self, filename):
@@ -93,5 +93,74 @@ class Control:
         with open(filename) as file:
             return cls.from_dict(json.load(file))
 
-test_user = User("mlakar", "pass", "mlakar", 1208112345, [],[1,1,1,1])
-test_control = Control(users=[test_user])
+test = Control(
+        users=[
+            User(
+                "mlakar",
+                "pass",
+                "mlakar", 
+                1208112345, 
+                [],
+                [1,1,1,1]
+            )
+        ]
+    )
+
+# @dataclass
+# class Uporabnik:
+#     uporabnisko_ime: str
+#     zasifrirano_geslo: str
+
+#     @staticmethod
+#     def zasifriraj_geslo(geslo_v_cistopisu):
+#         return "XXX" + geslo_v_cistopisu[::-1] + "XXX"
+
+#     def ima_geslo(self, geslo_v_cistopisu):
+#         return self.zasifriraj_geslo(geslo_v_cistopisu) == self.zasifrirano_geslo
+    
+#     def nastavi_novo_geslo(self, geslo_v_cistopisu):
+#         self.zasifrirano_geslo = self.zasifriraj_geslo(geslo_v_cistopisu)
+
+#     def v_slovar(self):
+#         return {
+#             "uporabnisko_ime": self.uporabnisko_ime,
+#             "zasifrirano_geslo": self.zasifrirano_geslo,
+#         }
+
+#     @classmethod
+#     def iz_slovarja(cls, slovar):
+#         return cls(
+#             uporabnisko_ime=slovar["uporabnisko_ime"],
+#             zasifrirano_geslo=slovar["zasifrirano_geslo"],
+#         )
+
+
+# @dataclass
+# class VseSkupaj:
+#     uporabniki: List[Uporabnik]
+
+#     def poisci_uporabnika(self, uporabnisko_ime, geslo_v_cistopisu=None):
+#         for uporabnik in self.uporabniki:
+#             if uporabnik.uporabnisko_ime == uporabnisko_ime:
+#                 if geslo_v_cistopisu is None or uporabnik.ima_geslo(geslo_v_cistopisu):
+#                     return uporabnik
+
+#     def v_slovar(self):
+#         return {
+#             "uporabniki": [uporabnik.v_slovar() for uporabnik in self.uporabniki],
+#         }
+
+#     @classmethod
+#     def iz_slovarja(cls, slovar):
+#         return cls(
+#             uporabniki=[Uporabnik.iz_slovarja(sl) for sl in slovar.keys()]
+#         )
+
+#     def v_datoteko(self, ime_datoteke):
+#         with open(ime_datoteke, "w") as f:
+#             json.dump(self.v_slovar(), f, ensure_ascii=False, indent=4)
+
+#     @classmethod
+#     def iz_datoteke(cls, ime_datoteke):
+#         with open(ime_datoteke) as f:
+#             return cls.iz_slovarja(json.load(f))
