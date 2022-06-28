@@ -17,7 +17,7 @@
 import json
 from dataclasses import dataclass
 from typing import List
-import test_generator
+import main_generator as generator
 import lcg
 import dice
 
@@ -37,6 +37,9 @@ class User:
     maps: list
     rolls: list
 
+    def __str__(self):
+        return f'{self.username}'
+
     def add_rolls(self, rolled:list):
         self.rolls.extend(rolled)
 
@@ -46,19 +49,19 @@ class User:
             "password" : self.password,
             "nickname" : self.display_name,
             "current_displayed_map" : self.displayed_map,
-            "saved_maps" : self.maps,
+            "maps" : self.maps,
             "roll_history" : self.rolls
         }
 
     @classmethod
-    def from_dict(cls,slovar):
+    def from_dict(cls,slovar:dict):
         return cls(
-            username = slovar["username"],
-            password = slovar["password"],
-            display_name = slovar["nickname"],
-            displayed_map = slovar["current_displayed_map"],
-            maps = slovar["saved_maps"],
-            rolls = slovar["roll_history"]
+            username=slovar["username"],
+            password=slovar["password"],
+            display_name=slovar["nickname"],
+            displayed_map=slovar["current_displayed_map"],
+            maps=slovar["maps"],
+            rolls=slovar["roll_history"]
         )
 
 @dataclass
@@ -66,6 +69,9 @@ class Control:
     #temporarily copying this to see what i can do with it
     #because im kinda stuck
     users: List[User]
+
+    def __repr__(self) -> str:
+        return f'users={[user for user in self.users]}'
 
     def find_user(self, username, password=None):
         for user in self.users:
@@ -81,7 +87,7 @@ class Control:
     @classmethod
     def from_dict(cls, slovar):
         return cls(
-            users=[User.from_dict(d) for d in slovar.keys()]
+            users=[User.from_dict(d) for d in slovar['users']]
         )
 
     def to_file(self, filename):
@@ -93,6 +99,14 @@ class Control:
         with open(filename) as file:
             return cls.from_dict(json.load(file))
 
+mlakar = User(
+                "mlakar",
+                "pass",
+                "mlakar", 
+                1208112345, 
+                [],
+                [1,1,1,1]
+            )
 test = Control(
         users=[
             User(

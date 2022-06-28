@@ -2,6 +2,32 @@
 % rebase('predloga.html', zavihek='stran_mapa', seed='map_seed')
 
 <div>
+    <div id="sidebar-left" class="sidebar">
+        <div id="generate-button">
+            <form action="/display-random/" method="POST">
+                <button> Generate random map</button>
+            </form>
+        </div>
+        <br><br>
+        <p>seed</p>
+        <p>l</p>
+        <p>h</p>
+        <p>c</p>
+        <div id="assets">
+            <h3>assets</h3>
+            <br>
+            <p>select</p>
+            <p>import</p>
+        </div>
+    </div>
+    <div id="sidebar-right" class="sidebar">
+        <div id="character">
+            <h2>user character</h2>
+        </div>
+        <div id="dice">
+            dice somewhere here
+        </div>
+    </div>
     <div id="map">
         <table>
             %for j in grid:
@@ -11,6 +37,8 @@
                     <td class="platform"> 1 </td>
                     %elif i == 2:
                     <td class="beginend-platform"> 2 </td>
+                    %elif i == 3:
+                    <td class="beginend-platform"> 3 </td>
                     %else:
                     <td class="grid_cell"> 0 </td>
                     %end

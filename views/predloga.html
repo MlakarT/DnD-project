@@ -20,8 +20,21 @@
         <title>D&D Map Generator</title>
         %end
         <link type="text/css" rel="stylesheet" href="/static/dopolnila.css"/>
-        <!-- <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+        <script>
+            $(window).load(function () {
+                $(".trigger_popup").click(function(){
+                    $('.hover_bkgr').show();
+                });
+                // $('.hover_bkgr').click(function(){
+                //     $('.hover_bkgr').hide();
+                // });
+                $('.popupCloseButton').click(function(){
+                    $('.hover_bkgr').hide();
+                });
+            });
+        </script>
+        <script src="https://www.google.com/jsapi"></script>
     </head>
     <body>
         <div class="top-bar">
@@ -34,36 +47,22 @@
                 </div>
             </nav>
             <div id="user">
-                <span></span>
-                <p>user@email</p>
+                <a class="trigger_popup">user@email</a>
                 <p><strong>saves</strong></p>
                 <p>everything else</p>
             </div>
-        </div>
-        <div id="sidebar-left" class="sidebar">
-            <div id="generate-button">
-                <form action="/display-random/" method="POST">
-                    <button> Generate random map</button>
-                </form>
-            </div>
-            <br><br>
-            <p>seed</p>
-            <p>l</p>
-            <p>h</p>
-            <p>c</p>
-            <div id="assets">
-                <h3>assets</h3>
-                <br>
-                <p>select</p>
-                <p>import</p>
-            </div>
-        </div>
-        <div id="sidebar-right" class="sidebar">
-            <div id="character">
-                <h2>user character</h2>
-            </div>
-            <div id="dice">
-                dice somewhere here
+            <div class="hover_bkgr" style="display: none;">
+                <span class="helper"></span>
+                <div>
+                    <div class="popupCloseButton">x</div>
+                    <form action="/user_login/" method="POST">
+                        <label for="username">Username</label><br>
+                        <input type="text" id="username" name="username"><br>
+                        <label for="pass">Password</label><br>
+                        <input type="password" id="pass" name="pass">
+                        <input type="submit" value="Login">
+                    </form>
+                </div>
             </div>
         </div>
         <div class="section">

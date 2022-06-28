@@ -2,34 +2,48 @@
 import bottle
 import model
 from model import Control
+from model import generator
 #from model import VseSkupaj
 
 with open('secret.txt') as tf:
     SECRET = tf.read()
-vse_skupaj = Control.from_file('state.json')
+vse_skupaj = Control.from_file('user_example.json')
 #vse_skupaj = VseSkupaj.iz_datoteke('state.json')
 
 def save_all():
-    vse_skupaj.to_file('state.json')
+    vse_skupaj.to_file('user_example.json')
 
-@bottle.post('/user_login/')
-def login():
-    username = bottle.request.forms.getunicode("username")
-    password = bottle.request.forms.getunicode("pass")
-    user = vse_skupaj.find_user(username, password)
-    if user:
-        bottle.response.set_cookie("username", username, path='/', secret=SECRET)
-        bottle.redirect('/')
-    else:
-        return "Incorrect username/password! Please try again."
-
+def url_request():
+    return bottle.request.path
+    
+def seed_to_map(seed:int) -> tuple:
+    st = str(seed) #GLARING ISSUE SEED CAN  HAVE ZEROS IN FRONT FIX LATER !!!!!!!!
+    w,h,c,ui = int(st[0:2]), int(st[2:4]), int(st[4]), int(st[5:])
+    return generator.Map(w,h,c,ui)
 
 def url_mape(seed:int):
     """Turn seed into map url of the form '/map/xxxxxxxxxx'"""
     return f"/map/{seed}"
 
-def save_state():
-    Control.to_file("state.json")
+
+@bottle.post('/user_login/')
+def login():
+    username = bottle.request.forms.getunicode("username")
+    password = bottle.request.forms.getunicode("pass")
+    if not password:
+        password = None
+    user = vse_skupaj.find_user(username, password)
+    print(username, password,'user=', user)
+    if user:
+        bottle.response.set_cookie("username", username, path='/', secret=SECRET)
+        bottle.redirect(URL)
+    else:
+        return "Incorrect username/password! Please try again."
+
+
+
+# def save_state():
+#     Control.to_file("state.json")
 
 @bottle.get('/')
 def osnovni_zaslon():
@@ -42,24 +56,30 @@ def server_static(ime_dat):
   
 @bottle.get('/welcome_page/')
 def display_welcome():
-    return bottle.template('views/welcome.html',
-    )
+    global URL
+    URL = url_request()
+    return bottle.template('views/welcome.html',)
 
 @bottle.get('/map/<map_seed:int>')
 def display_map(map_seed:int):
+    global URL
+    URL = url_request()
     if map_seed == 0:
         grid = [[]]
         return bottle.template('views/stran_mapa',
         grid = grid,
         )
     else:
-        map = model.Map(str(map_seed))
-        map.exception_library()
-        map.grid_matrix()
+        map = seed_to_map(map_seed)
+        map.make_seed()
+        map.calc_start()
+        map.calc_length()
+        map.prefered_steps()
+        map.make_path()
+        grid = generator.make_map(map)
         return bottle.template('views/stran_mapa',
-        map_seed = map.seed, grid = map.matrix,
+        map_seed = map.seed, grid = grid,
         )
-
 
 @bottle.post('/display-map/')
 def display_requested():
@@ -69,7 +89,10 @@ def display_requested():
 
 @bottle.post('/display-random/')
 def display_random():
-    seed = int(model.generate())
+    x,y,c,ui = generator.generate_seed()
+    map = generator.Map(x,y,c,ui)
+    map.make_seed()
+    seed = map.seed
     url = url_mape(seed)
     bottle.redirect(url)
 

@@ -18,7 +18,7 @@ def generate_seed(c:int = None) -> tuple:
         comp = c
     else:
         comp = rd.randint(1,9)
-    ui = rd.randint(0,99999)
+    ui = rd.randint(1,99999)
     return x,y,comp,ui
 
 
@@ -45,9 +45,7 @@ class Map:
 
     def calc_length(self) -> int:
         num = sum(int(i) for i in str(self.unique_id))
-        print(num)
         self.length = int((self.width + self.height + num) * sqrt(self.complexity))
-        print(self.length)
 
     def prefered_steps(self) -> list:
         cifre = lcg.num_rec_lcg(int(self.seed))
@@ -89,7 +87,20 @@ class Map:
         self.path[x,y] = 3
         return self.path
             
+def make_map(map:Map) -> list:
+    width, height, path = map.width, map.height, map.path
+    matrix = []
+    for j in range(height):
+        row = []
+        for i in range(width):
+            if (i,j) in path:
+                row.append(path[(i,j)])
+            else:
+                row.append(0)
+        matrix.append(row)
+    return matrix
 
+    
 def draw_map(map:Map) -> None:
     width, height, path = map.width, map.height, map.path
     matrix = []
@@ -105,14 +116,14 @@ def draw_map(map:Map) -> None:
         print(row)
 
 """Sample code for testing purposes"""
-x,y,c,ui = generate_seed()
-#x,y,c,ui = 49, 42, 20, 45542
-#x,y,c,ui = 39,11,6,76935
-SAMPLE_MAP_1 = Map(x,y,c,ui)
-SAMPLE_MAP_1.make_seed()
-SAMPLE_MAP_1.calc_start()
-SAMPLE_MAP_1.calc_length()
-SAMPLE_MAP_1.prefered_steps()
-SAMPLE_MAP_1.make_path()
-draw_map(SAMPLE_MAP_1)
-print(SAMPLE_MAP_1,'seed:', SAMPLE_MAP_1.seed, 'start:', SAMPLE_MAP_1.starting_x, SAMPLE_MAP_1.starting_y,'length:', SAMPLE_MAP_1.length, 'path:', SAMPLE_MAP_1.path)
+# x,y,c,ui = generate_seed()
+# #x,y,c,ui = 49, 42, 20, 45542
+# #x,y,c,ui = 39,11,6,76935
+# SAMPLE_MAP_1 = Map(x,y,c,ui)
+# SAMPLE_MAP_1.make_seed()
+# SAMPLE_MAP_1.calc_start()
+# SAMPLE_MAP_1.calc_length()
+# SAMPLE_MAP_1.prefered_steps()
+# SAMPLE_MAP_1.make_path()
+# draw_map(SAMPLE_MAP_1)
+# print(SAMPLE_MAP_1,'seed:', SAMPLE_MAP_1.seed, 'start:', SAMPLE_MAP_1.starting_x, SAMPLE_MAP_1.starting_y,'length:', SAMPLE_MAP_1.length, 'path:', SAMPLE_MAP_1.path)

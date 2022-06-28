@@ -11,10 +11,10 @@
 - add functionality to buttons on left sidebar
 - add dice and character sheet in right sidebar ✅
 - make the website **not crash every 2 milliseconds** ✅
-- fix login
+- fix login ✅ display login
 - fix dice
 - refer to notes in notes app for more work
-- found random bug in code, try to fix
+- found a non display map, seems to be an issue with seed reading
 
 <!-- doign this rn -->
 

@@ -1,0 +1,12 @@
+{
+    "users":[
+        {
+            "username" : "mlakar",
+            "password" : "pass",
+            "nickname" : "mlakar",
+            "displayed_map" : 1208112345,
+            "maps" : [],
+            "rolls" : [1,1,1,1]
+        }
+    ]
+}
