@@ -20,6 +20,7 @@
 <!-- doign this rn -->
 
 - use [this css file](https://www.w3schools.com/w3css/4/w3.css) as ref
+- use [this page](https://bottlepy.org/docs/dev/api.html#bottle.BaseRequest.files) for bottle documentation ref
 
 ## Cool or wierd seeds i found whilst testing
 
