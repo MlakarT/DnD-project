@@ -9,10 +9,17 @@
             </form>
         </div>
         <br><br>
+        %if defined('map_seed'):
+        <p>seed: {{map_seed}}</p>
+        <p>l: {{x}}</p>
+        <p>h : {{y}}</p>
+        <p>c : {{c}}</p>
+        %else:
         <p>seed</p>
         <p>l</p>
         <p>h</p>
         <p>c</p>
+        %end
         <div id="assets">
             <h3>assets</h3>
             <br>

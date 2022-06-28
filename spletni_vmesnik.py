@@ -78,7 +78,7 @@ def display_map(map_seed:int):
         map.make_path()
         grid = generator.make_map(map)
         return bottle.template('views/stran_mapa',
-        map_seed = map.seed, grid = grid,
+        map_seed = map.seed, grid = grid, x=map.width, y= map.height, c=map.complexity,
         )
 
 @bottle.post('/display-map/')

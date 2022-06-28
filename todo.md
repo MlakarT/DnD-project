@@ -14,7 +14,8 @@
 - fix login ✅ display login
 - fix dice
 - refer to notes in notes app for more work
-- found a non display map, seems to be an issue with seed reading
+- found a non display map, seems to be an issue with seed reading, seede eats zeros when reading which then calculates all proportions wrong
+- this will be fixed later with improved reading, right now its not a "bug", its a *feature*.
 
 <!-- doign this rn -->
 
