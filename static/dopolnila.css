@@ -98,12 +98,26 @@
 }
 
 #map {
-    width : 960px;
-    height : 640px;
+    display: table;
+    width : 65%;
+    height:110%;
     float:left;
 }
+.cell {
+    position: relative;
+    border: 1px solid black;
+}
+.platform{
+    background-color: black;
+}
+.begin-platform{
+    background-color: red;
+}
+.end-platform{
+    background-color: lightblue;
+}
 
-.grid_cell{
+/* .grid_cell{
     background-color: white;
     border: 2px solid black;
     color: white;
@@ -119,8 +133,8 @@
     border: 2px solid black;
     font-family: monospace;
 
-}
-/* test */
+} */
+/* not really a test anymore, will edit later though */
 .hover_bkgr{
     background:rgba(0,0,0,.4);
     cursor:pointer;

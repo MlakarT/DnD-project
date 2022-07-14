@@ -14,6 +14,8 @@ STEPS = {
 def generate_seed(c:int = None) -> tuple:
     x = rd.randint(3,50)
     y = rd.randint(2,50)
+    while y > x:
+        y = rd.randint(2,50)
     if c:
         comp = c
     else:
