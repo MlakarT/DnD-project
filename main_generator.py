@@ -33,7 +33,7 @@ class Map:
     unique_id: int
 
     def make_seed(self) -> str:
-        self.seed = str(self.width) + str(self.height) + str(self.complexity) + str(self.unique_id)
+        self.seed = str(self.width).zfill(2) + str(self.height).zfill(2) + str(self.complexity) + str(self.unique_id).zfill(5)
         return self.seed
 
     def calc_start(self) -> None:
@@ -117,8 +117,8 @@ def draw_map(map:Map) -> None:
 
 """Sample code for testing purposes"""
 # x,y,c,ui = generate_seed()
-# #x,y,c,ui = 49, 42, 20, 45542
-# #x,y,c,ui = 39,11,6,76935
+# x,y,c,ui = 49, 42, 20, 45542
+# x,y,c,ui = 39,11,6,76935
 # SAMPLE_MAP_1 = Map(x,y,c,ui)
 # SAMPLE_MAP_1.make_seed()
 # SAMPLE_MAP_1.calc_start()
@@ -126,4 +126,4 @@ def draw_map(map:Map) -> None:
 # SAMPLE_MAP_1.prefered_steps()
 # SAMPLE_MAP_1.make_path()
 # draw_map(SAMPLE_MAP_1)
-# print(SAMPLE_MAP_1,'seed:', SAMPLE_MAP_1.seed, 'start:', SAMPLE_MAP_1.starting_x, SAMPLE_MAP_1.starting_y,'length:', SAMPLE_MAP_1.length, 'path:', SAMPLE_MAP_1.path)
+# print(SAMPLE_MAP_1,'seed:', SAMPLE_MAP_1.seed, 'start:', SAMPLE_MAP_1.starting_x, SAMPLE_MAP_1.starting_y,'length:', SAMPLE_MAP_1.length,)

@@ -16,12 +16,11 @@ def save_all():
 def url_request():
     return bottle.request.path
     
-def seed_to_map(seed:int) -> tuple:
-    st = str(seed) #GLARING ISSUE SEED CAN  HAVE ZEROS IN FRONT FIX LATER !!!!!!!!
-    w,h,c,ui = int(st[0:2]), int(st[2:4]), int(st[4]), int(st[5:])
+def seed_to_map(seed:str) -> generator.Map:
+    w,h,c,ui = int(seed[0:2]), int(seed[2:4]), int(seed[4]), int(seed[5:])
     return generator.Map(w,h,c,ui)
 
-def url_mape(seed:int):
+def url_mape(seed:str):
     """Turn seed into map url of the form '/map/xxxxxxxxxx'"""
     return f"/map/{seed}"
 
@@ -60,11 +59,11 @@ def display_welcome():
     URL = url_request()
     return bottle.template('views/welcome.html',)
 
-@bottle.get('/map/<map_seed:int>')
-def display_map(map_seed:int):
+@bottle.get('/map/<map_seed>')
+def display_map(map_seed:str):
     global URL
     URL = url_request()
-    if map_seed == 0:
+    if not map_seed:
         grid = [[]]
         return bottle.template('views/stran_mapa',
         grid = grid,
