@@ -47,21 +47,41 @@
                 </div>
             </nav>
             <div id="user">
-                <a class="trigger_popup">user@email</a>
+                %if defined('user'):
+                %if user == 'no_user':
+                <a class="trigger_popup is-underlined"><strong>Log In</strong></a>
+                %else:
+                <form action="/user-logout/" method="POST">
+                    <strong>{{user}}</strong> <input type="submit" value="Log out">
+                </form>
                 <p><strong>saves</strong></p>
                 <p>everything else</p>
+                %end
             </div>
             <div class="hover_bkgr" style="display: none;">
                 <span class="helper"></span>
                 <div>
                     <div class="popupCloseButton">x</div>
-                    <form action="/user_login/" method="POST">
-                        <label for="username">Username</label><br>
-                        <input type="text" id="username" name="username"><br>
-                        <label for="pass">Password</label><br>
-                        <input type="password" id="pass" name="pass">
-                        <input type="submit" value="Login">
-                    </form>
+                    <div id="existing-user">
+                        <form action="/user-login/" method="POST">
+                            <label for="username">Username</label><br>
+                            <input type="text" id="username" name="username"><br>
+                            <label for="pass">Password</label><br>
+                            <input type="password" id="pass" name="pass">
+                            <input type="submit" value="Login"><br>
+                            <a class="is-underlined">Forgot password?</a>
+                        </form>
+                    </div>
+                    <div id="new-user">
+                        <form action="/user-register/" method="POST">
+                            <label for="new_username">Username</label>
+                            <input type="text" id="new_username" name="new_username"><br>
+                            <label for="new_pass">New password</label>
+                            <input type="text" id="new_pass" name="new_pass"><br>
+                            <input type="text" id="confirmpass" name="confirmpass" placeholder="Confirm your password"><br>
+                            <input type="submit" value="Register">
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

@@ -38,6 +38,10 @@
     text-decoration: none;
     color: black;
 }
+.is-underlined{
+    text-decoration: underline;
+    color: black;
+}
 #main_title {
     width: 20%;
     height: 90%;
@@ -104,8 +108,8 @@
     float:left;
 }
 .cell {
-    position: relative;
-    border: 1px solid black;
+    /* position: relative; ta stvar tukej konkretno sfuka display order */ 
+    border: 1px solid black; /* jebes css kdorkol je to izumu se lah vrze v krsko nuklearko */
 }
 .platform{
     background-color: black;
@@ -135,6 +139,14 @@
 
 } */
 /* not really a test anymore, will edit later though */
+#existing-user{
+    float:left;
+}
+#new-user{
+    float:right;
+}
+
+
 .hover_bkgr{
     background:rgba(0,0,0,.4);
     cursor:pointer;

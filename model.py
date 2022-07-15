@@ -68,6 +68,7 @@ class User:
 class Control:
     #temporarily copying this to see what i can do with it
     #because im kinda stuck
+    #got unstuck but it still doesnt work 
     users: List[User]
 
     def __repr__(self) -> str:
