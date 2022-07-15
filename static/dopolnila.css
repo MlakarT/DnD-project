@@ -24,6 +24,7 @@
     display: block;
     height: 45em;
     width: 15%;
+    padding: 1em;
     border: 2px dotted gray;
     font-family: Luminari, monospace;
 }
@@ -44,14 +45,15 @@
 }
 #main_title {
     width: 20%;
-    height: 90%;
+    height: auto;
+    padding: 1em;
     float: left;
     border: 2px solid black;
 }
 
 #search_bar {
     height: auto;
-    width: 50%;
+    width: auto;
     float: left;
     margin-left: 20px;
     margin-top: 54px;
@@ -60,10 +62,11 @@
 }
 
 #user {
-    height: 90%;
+    height: auto;
     width: 20%;
     float:right;
     border: 2px inset gray;
+    padding: 1em;
     font-family: monospace;
     text-align: center;
 }
@@ -74,6 +77,13 @@
 #sidebar-right{
     float:right;
 }
+
+#assets{
+    border:1px inset black;
+    padding: 1em;
+    margin-top: 1em;
+}
+
 #start-display{
     display: block;
     width :60em;
