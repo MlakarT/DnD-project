@@ -3,11 +3,13 @@
 %    'welcome',
 %    'stran_mapa',
 %    'stran_shared',
+%    'saves',
 % ]
 % zavihki = {
 %    'welcome' : 'Welcome page',    
 %    'stran_mapa' : 'Map display',
-%    'stran_shared' : 'Browse shared'
+%    'stran_shared' : 'Browse shared',
+%    'saves' : 'Saved maps',
 % }
 
 <html>
@@ -53,8 +55,8 @@
                 %else:
                 <form action="/user-logout/" method="POST">
                     <strong>{{user}}</strong> <input type="submit" value="Log out">
-                </form>
-                <p><strong>saves</strong></p>
+                </form><br>
+                <a href="/saved_maps/">Saves</a>
                 <p>everything else</p>
                 %end
             </div>

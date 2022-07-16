@@ -16,6 +16,8 @@
 - refer to notes in notes app for more work
 - found a non display map, seems to be an issue with seed reading, seede eats zeros when reading which then calculates all proportions wrong ✅
 - this will be fixed later with improved reading, right now its not a "bug", its a *feature*. ✅
+- Currently display saves takes you to a separate window where maps are displayed, work on this
+- make a dropdown quick access menu for favourited maps with JS *later*
 
 <!-- doign this rn -->
 

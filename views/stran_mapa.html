@@ -34,7 +34,7 @@
             <p>h</p>
             <p>c</p>
             %end
-            <input type="submit" value="Generate"> <input type="reset">
+            <input type="submit" value="Generate"> <input type="reset"> 
         </form>
     </div>
     <div id="assets">
@@ -43,6 +43,13 @@
         <p>select</p>
         <p>import</p>
     </div>
+    %if defined('user') and user != 'no_user':
+    <div id="save-button">
+        <form action="/save-map/" method="POST">
+            <input type="submit" value="Save current map!">
+        </form>
+    </div>
+    %end
 </div>
 <div id="map">
     <table style="width:100%;height:100%">

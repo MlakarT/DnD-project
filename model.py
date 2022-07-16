@@ -30,10 +30,8 @@ class Game:
 class User:
     username: str
     password: str
-    display_name: str
     #user_character: None
     #user_role: None
-    displayed_map: int
     maps: list
     rolls: list
 
@@ -47,8 +45,6 @@ class User:
         return {
             "username" : self.username,
             "password" : self.password,
-            "nickname" : self.display_name,
-            "current_displayed_map" : self.displayed_map,
             "maps" : self.maps,
             "roll_history" : self.rolls
         }
@@ -58,8 +54,6 @@ class User:
         return cls(
             username=slovar["username"],
             password=slovar["password"],
-            display_name=slovar["nickname"],
-            displayed_map=slovar["current_displayed_map"],
             maps=slovar["maps"],
             rolls=slovar["roll_history"]
         )
@@ -79,6 +73,12 @@ class Control:
             if user.username == username:
                 if password is None or user.password:
                     return user
+
+    def active_user(self, username):
+        #tole je skor isto ampak predpostav da je uporabnik ze prjaulen
+        for user in self.users:
+            if user.username == username:
+                return user
     
     def to_dict(self):
         return {
@@ -103,8 +103,6 @@ class Control:
 mlakar = User(
                 "mlakar",
                 "pass",
-                "mlakar", 
-                1208112345, 
                 [],
                 [1,1,1,1]
             )
@@ -113,8 +111,6 @@ test = Control(
             User(
                 "mlakar",
                 "pass",
-                "mlakar", 
-                1208112345, 
                 [],
                 [1,1,1,1]
             )

@@ -66,12 +66,12 @@ def new_user_register():
     username = bottle.request.forms.getunicode("new_username")
     password = bottle.request.forms.getunicode("new_pass")
     password2 = bottle.request.forms.getunicode("confirmpass")
+    if username in [user.username for user in vse_skupaj.users]:
+        return 'Account already exists or username is already taken. Please try again.'
     if password == password2:
         new_user = User.from_dict({
             'username' : username,
             'password' : password,
-            'nickname' : None,
-            'current_displayed_map' : None,
             'maps' : [],
             'roll_history' : []
         })
@@ -99,32 +99,64 @@ def server_static(ime_dat):
 def display_welcome():
     global URL
     URL = url_request()
-    user = current_user()
+    user = vse_skupaj.active_user(current_user())
+    if not user:
+        return bottle.template('views/welcome.html', user='no_user',)
     print(user)
-    return bottle.template('views/welcome.html',user=user)
+    return bottle.template('views/welcome.html',user=user.username,)
 
 @bottle.get('/map/<map_seed>')
 def display_map(map_seed:str):
     global URL
     URL = url_request()
-    user = current_user()
-    if not map_seed:
-        grid = [[]]
-        return bottle.template('views/stran_mapa',
-        grid = grid,
-        user=user,
-        )
+    user = vse_skupaj.active_user(current_user())
+    if not user:
+        if not map_seed:
+            grid = [[]]
+            return bottle.template('views/stran_mapa',
+            grid = grid,
+            user='no_user',
+            maps=[],
+            )
+        else:
+            map = seed_to_map(map_seed)
+            map.make_seed()
+            map.calc_start()
+            map.calc_length()
+            map.prefered_steps()
+            map.make_path()
+            grid = generator.make_map(map)
+            return bottle.template('views/stran_mapa',
+            map_seed = map.seed, grid = grid, x=map.width, y= map.height, c=map.complexity,
+            user='no_user',
+            )
     else:
-        map = seed_to_map(map_seed)
-        map.make_seed()
-        map.calc_start()
-        map.calc_length()
-        map.prefered_steps()
-        map.make_path()
-        grid = generator.make_map(map)
-        return bottle.template('views/stran_mapa',
-        map_seed = map.seed, grid = grid, x=map.width, y= map.height, c=map.complexity, user=user,
-        )
+        if not map_seed:
+            grid = [[]]
+            return bottle.template('views/stran_mapa',
+            grid = grid,
+            user=user.username,
+            maps=user.maps,
+            )
+        else:
+            map = seed_to_map(map_seed)
+            map.make_seed()
+            map.calc_start()
+            map.calc_length()
+            map.prefered_steps()
+            map.make_path()
+            grid = generator.make_map(map)
+            return bottle.template('views/stran_mapa',
+            map_seed = map.seed, grid = grid, x=map.width, y= map.height, c=map.complexity,
+            user=user.username,
+            )
+@bottle.get('/saved_maps/')
+def display_saves():
+    global URL
+    URL = url_request()
+    user = vse_skupaj.active_user(current_user())
+    return bottle.template('views/saves', user=user.username, maps=user.maps)
+    
 
 @bottle.post('/display-map/')
 def display_requested():
@@ -140,6 +172,16 @@ def display_random():
     seed = map.seed
     url = url_mape(seed)
     bottle.redirect(url)
+
+@bottle.post('/save-map/')
+def save_displayed():
+    user = vse_skupaj.active_user(current_user())
+    current_map = URL.split('/')[2]
+    if current_map in user.maps:
+        bottle.redirect(URL)
+    user.maps.append(current_map)
+    save_all()
+    bottle.redirect(URL)
 
 @bottle.route('/roll-dice/', method='POST')
 def roll_dice():

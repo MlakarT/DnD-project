@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+% rebase('views\predloga.html', zavihek='saves')
+<div>
+    %if len(maps) == 0:
+    <p>You currently have no saved maps!</p>
+    %else:
+        %for map in maps:
+    <a href="/map/{{map}}">{{map}}</a>
+        %end
+    %end
+</div>

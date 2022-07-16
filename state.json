@@ -3,9 +3,9 @@
         {
             "username": "mlakar",
             "password": "pass",
-            "nickname": "mlakar",
-            "current_displayed_map": 1208112345,
-            "maps": [],
+            "maps": [
+                "4714886210"
+            ],
             "roll_history": [
                 1,
                 1,
@@ -16,32 +16,16 @@
         {
             "username": "admin",
             "password": null,
-            "nickname": "admin",
-            "current_displayed_map": 1111111111,
-            "maps": [],
+            "maps": [
+                "0504935815",
+                "1809518081",
+                "1714579207"
+            ],
             "roll_history": []
         },
         {
             "username": "NewUser",
             "password": "password1",
-            "nickname": null,
-            "current_displayed_map": null,
-            "maps": [],
-            "roll_history": []
-        },
-        {
-            "username": "NewUser",
-            "password": "password1",
-            "nickname": null,
-            "current_displayed_map": null,
-            "maps": [],
-            "roll_history": []
-        },
-        {
-            "username": "NewUser",
-            "password": "password1",
-            "nickname": null,
-            "current_displayed_map": null,
             "maps": [],
             "roll_history": []
         }
