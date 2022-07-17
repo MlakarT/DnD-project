@@ -129,5 +129,6 @@ dmypy.json
 .pyre/
 
 # Additional ignores
-.json
-.txt
+*.json
+*.txt
+generator_test_file.py
