@@ -131,4 +131,4 @@ dmypy.json
 # Additional ignores
 *.json
 *.txt
-generator_test_file.py
+.generator_test_file.py
