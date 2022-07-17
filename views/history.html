@@ -1,12 +1,5 @@
 <!DOCTYPE html>
-% rebase('views\predloga.html', zavihek='welcome')
-<div id="sidebar-left" class="sidebar">
-    <div id="generate-button" style="padding:3em">
-        <form action="/display-random/" method="POST">
-            <button> Generate random map</button>
-        </form>
-    </div>
-</div>
+% rebase('views\predloga.html', zavihek='history')
 <div id="sidebar-right" class="sidebar">
     <div id="character">
         <h2>user character</h2>
@@ -30,17 +23,12 @@
         % if defined('roll'):
         <div id="last-rolls">
             <p> Your last roll: <strong>{{roll}}</strong></p>
-            %if defined('user') and user != 'no_user':
-            <a href="/display_rolls/">View roll history</a>
-            %end
         </div>
         % end
     </div>
 </div>
-<div id="start-display">
-    <form method="POST" action="/display-map/">
-    <input type="text" id="seed" name="seed" class="custom" minlength="10" maxlength="10" size="20" placeholder="Enter seed to begin!">
-    </form>
+<div id="history-display">
+    % for dice in rolls.keys():
+    <p>{{dice}} : {{rolls[dice]}}</p>
+    % end
 </div>
-
-

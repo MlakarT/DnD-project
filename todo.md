@@ -18,6 +18,7 @@
 - this will be fixed later with improved reading, right now its not a "bug", its a *feature*. ✅
 - Currently display saves takes you to a separate window where maps are displayed, work on this
 - make a dropdown quick access menu for favourited maps with JS *later*
+- make a popup display for roll history to display each roll with its assosiated die, presumably with JS
 
 <!-- doign this rn -->
 

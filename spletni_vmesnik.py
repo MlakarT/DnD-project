@@ -1,28 +1,27 @@
 #first we play a little with the code
+from ast import Global
+from tkinter import LAST
 import bottle
+from dice import Dice
 import model
 from model import Control
 from model import generator
 from model import User
-#from model import VseSkupaj
 
 with open('secret.txt') as tf:
     SECRET = tf.read()
 vse_skupaj = Control.from_file('state.json')
-#vse_skupaj = VseSkupaj.iz_datoteke('state.json')
+
+#tole je potrebn da lahko na welcome pagu nastimas zadn met
+global LAST_ROLLED
+LAST_ROLLED = None
 
 def save_all():
     vse_skupaj.to_file('state.json')
 
 def url_request():
     return bottle.request.path
-    
-# def current_user():
-#     username = bottle.response.get_cookie('username', secret=SECRET)
-#     if username:
-#         return Control.from_file(f"{username}.json")
-#     else:
-#         bottle.redirect(URL)
+
 
 def current_user():
     username = bottle.request.get_cookie('username', secret=SECRET)
@@ -59,6 +58,8 @@ def login():
 @bottle.post('/user-logout/')
 def logout():
     bottle.response.delete_cookie('username', path='/', secret=SECRET)
+    if URL == '/saved_maps/' or URL == '/display_rolls/':
+        bottle.redirect('/')
     bottle.redirect(URL)
 
 @bottle.post('/user-register/')
@@ -73,7 +74,7 @@ def new_user_register():
             'username' : username,
             'password' : password,
             'maps' : [],
-            'roll_history' : []
+            'roll_history' : {}
         })
         vse_skupaj.users.append(new_user)
         save_all()
@@ -87,6 +88,8 @@ def new_user_register():
 
 @bottle.get('/')
 def osnovni_zaslon():
+    global LAST_ROLLED
+    LAST_ROLLED = None
     bottle.redirect('/welcome_page/')
 
 @bottle.get('/static/<ime_dat:path>')
@@ -101,61 +104,102 @@ def display_welcome():
     URL = url_request()
     user = vse_skupaj.active_user(current_user())
     if not user:
-        return bottle.template('views/welcome.html', user='no_user',)
-    print(user)
-    return bottle.template('views/welcome.html',user=user.username,)
+        if not LAST_ROLLED:
+            return bottle.template('views/welcome.html', user='no_user',)
+        return bottle.template('views/welcome.html', user='no_user', roll=LAST_ROLLED[0],)
+    else:
+        if not LAST_ROLLED:
+            return bottle.template('views/welcome.html',user=user.username,)
+    return bottle.template('views/welcome.html',user=user.username, roll=LAST_ROLLED[0],)
 
 @bottle.get('/map/<map_seed>')
 def display_map(map_seed:str):
     global URL
     URL = url_request()
     user = vse_skupaj.active_user(current_user())
+    map = seed_to_map(map_seed)
+    map.make_seed()
+    map.calc_start()
+    map.calc_length()
+    map.prefered_steps()
+    map.make_path()
+    grid = generator.make_map(map)
     if not user:
-        if not map_seed:
-            grid = [[]]
-            return bottle.template('views/stran_mapa',
-            grid = grid,
-            user='no_user',
-            maps=[],
-            )
-        else:
-            map = seed_to_map(map_seed)
-            map.make_seed()
-            map.calc_start()
-            map.calc_length()
-            map.prefered_steps()
-            map.make_path()
-            grid = generator.make_map(map)
+        if not LAST_ROLLED:
             return bottle.template('views/stran_mapa',
             map_seed = map.seed, grid = grid, x=map.width, y= map.height, c=map.complexity,
-            user='no_user',
-            )
+            user='no_user',)
+        return bottle.template('views/stran_mapa',
+        map_seed = map.seed, grid = grid, x=map.width, y= map.height, c=map.complexity,
+        user='no_user',
+        roll=LAST_ROLLED[0],
+        )
     else:
-        if not map_seed:
-            grid = [[]]
-            return bottle.template('views/stran_mapa',
-            grid = grid,
-            user=user.username,
-            maps=user.maps,
-            )
-        else:
-            map = seed_to_map(map_seed)
-            map.make_seed()
-            map.calc_start()
-            map.calc_length()
-            map.prefered_steps()
-            map.make_path()
-            grid = generator.make_map(map)
+        if not LAST_ROLLED:
             return bottle.template('views/stran_mapa',
             map_seed = map.seed, grid = grid, x=map.width, y= map.height, c=map.complexity,
             user=user.username,
             )
+        return bottle.template('views/stran_mapa',
+        map_seed = map.seed, grid = grid, x=map.width, y= map.height, c=map.complexity,
+        user=user.username,
+        roll=LAST_ROLLED[0],
+        )
+        # if not map_seed:
+        #     grid = [[]]
+        #     return bottle.template('views/stran_mapa',
+        #     grid = grid,
+        #     user='no_user',
+        #     roll=LAST_ROLLED[0],
+        #     )
+        # else:
+        #     map = seed_to_map(map_seed)
+        #     map.make_seed()
+        #     map.calc_start()
+        #     map.calc_length()
+        #     map.prefered_steps()
+        #     map.make_path()
+        #     grid = generator.make_map(map)
+        #     return bottle.template('views/stran_mapa',
+        #     map_seed = map.seed, grid = grid, x=map.width, y= map.height, c=map.complexity,
+        #     user='no_user',
+        #     roll=LAST_ROLLED[0],
+        #     )
+        # else:
+        #     if not map_seed:
+        #         grid = [[]]
+        #         return bottle.template('views/stran_mapa',
+        #         grid = grid,
+        #         user=user.username,
+        #         roll=LAST_ROLLED[0],
+        #         )
+        #     else:
+        #         map = seed_to_map(map_seed)
+        #         map.make_seed()
+        #         map.calc_start()
+        #         map.calc_length()
+        #         map.prefered_steps()
+        #         map.make_path()
+        #         grid = generator.make_map(map)
+        #         return bottle.template('views/stran_mapa',
+        #         map_seed = map.seed, grid = grid, x=map.width, y= map.height, c=map.complexity,
+        #         user=user.username,
+        #         roll=LAST_ROLLED[0],
+        #         )
+
 @bottle.get('/saved_maps/')
 def display_saves():
     global URL
     URL = url_request()
     user = vse_skupaj.active_user(current_user())
-    return bottle.template('views/saves', user=user.username, maps=user.maps)
+    return bottle.template('views/saves', user=user.username, maps=user.maps,)
+
+@bottle.get('/display_rolls/')
+def display_roll_history():
+    global URL
+    URL = url_request()
+    user = vse_skupaj.active_user(current_user())
+    return bottle.template('views/history', user=user.username, rolls = user.rolls,)
     
 
 @bottle.post('/display-map/')
@@ -183,10 +227,18 @@ def save_displayed():
     save_all()
     bottle.redirect(URL)
 
-@bottle.route('/roll-dice/', method='POST')
+@bottle.post('/roll/')
 def roll_dice():
-    dice = bottle.request.forms.getunicode("Die")
-    bottle.redirect('/')
+    user = vse_skupaj.active_user(current_user())
+    sides = int(bottle.request.forms.getunicode("dice"))
+    d = Dice(sides)
+    global LAST_ROLLED
+    LAST_ROLLED = d() #makes the actual roll
+    if not user:
+        bottle.redirect(URL)
+    user.add_rolls(d,LAST_ROLLED)
+    save_all()
+    bottle.redirect(URL)
 
 @bottle.error(404)
 def error404(error):

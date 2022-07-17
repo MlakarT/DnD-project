@@ -19,7 +19,7 @@ from dataclasses import dataclass
 from typing import List
 import main_generator as generator
 import lcg
-import dice
+from dice import Dice
 
 
 #Gonna probably split the code into three files for easier manipulation
@@ -33,13 +33,16 @@ class User:
     #user_character: None
     #user_role: None
     maps: list
-    rolls: list
+    rolls: dict
 
     def __str__(self):
         return f'{self.username}'
 
-    def add_rolls(self, rolled:list):
-        self.rolls.extend(rolled)
+    def add_rolls(self, dice, rolled:list):
+        if str(dice) not in self.rolls:
+            self.rolls[str(dice)] = rolled
+        else:
+            self.rolls[str(dice)].extend(rolled)
 
     def to_dict(self):
         return {
@@ -100,11 +103,15 @@ class Control:
         with open(filename) as file:
             return cls.from_dict(json.load(file))
 
+d20=Dice(20)
+
 mlakar = User(
                 "mlakar",
                 "pass",
                 [],
-                [1,1,1,1]
+                {
+                    'd20' : [1,1,1,1]
+                },
             )
 test = Control(
         users=[
@@ -112,7 +119,9 @@ test = Control(
                 "mlakar",
                 "pass",
                 [],
-                [1,1,1,1]
+                {
+                    'd20' : [1,1,1,1]
+                },
             )
         ]
     )
