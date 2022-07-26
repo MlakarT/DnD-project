@@ -1,6 +1,4 @@
 #first we play a little with the code
-from ast import Global
-from tkinter import LAST
 import bottle
 from dice import Dice
 import model
