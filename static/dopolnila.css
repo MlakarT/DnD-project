@@ -124,14 +124,18 @@
 }
 
 #map {
-    display: table;
-    width : 65%;
-    height:110%;
+    display: block;
+    width : 63%;
+    margin-left: 2%;
+    /* height:110%; */
     float:left;
 }
+
 .cell {
-    /* position: relative; ta stvar tukej konkretno sfuka display order */ 
-    border: 1px solid black; /* jebes css kdorkol je to izumu se lah vrze v krsko nuklearko */
+    /*position: relative; ta stvar tukej konkretno sfuka display order */
+    display: inline-block;
+    border: 1px solid black;
+    height:0; /* jebes css kdorkol je to izumu se lah vrze v krsko nuklearko */
 }
 .platform {
     background-color: black;

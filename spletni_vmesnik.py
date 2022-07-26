@@ -143,47 +143,6 @@ def display_map(map_seed:str):
         user=user.username,
         roll=LAST_ROLLED[0],
         )
-        # if not map_seed:
-        #     grid = [[]]
-        #     return bottle.template('views/stran_mapa',
-        #     grid = grid,
-        #     user='no_user',
-        #     roll=LAST_ROLLED[0],
-        #     )
-        # else:
-        #     map = seed_to_map(map_seed)
-        #     map.make_seed()
-        #     map.calc_start()
-        #     map.calc_length()
-        #     map.prefered_steps()
-        #     map.make_path()
-        #     grid = generator.make_map(map)
-        #     return bottle.template('views/stran_mapa',
-        #     map_seed = map.seed, grid = grid, x=map.width, y= map.height, c=map.complexity,
-        #     user='no_user',
-        #     roll=LAST_ROLLED[0],
-        #     )
-        # else:
-        #     if not map_seed:
-        #         grid = [[]]
-        #         return bottle.template('views/stran_mapa',
-        #         grid = grid,
-        #         user=user.username,
-        #         roll=LAST_ROLLED[0],
-        #         )
-        #     else:
-        #         map = seed_to_map(map_seed)
-        #         map.make_seed()
-        #         map.calc_start()
-        #         map.calc_length()
-        #         map.prefered_steps()
-        #         map.make_path()
-        #         grid = generator.make_map(map)
-        #         return bottle.template('views/stran_mapa',
-        #         map_seed = map.seed, grid = grid, x=map.width, y= map.height, c=map.complexity,
-        #         user=user.username,
-        #         roll=LAST_ROLLED[0],
-        #         )
 
 @bottle.get('/saved_maps/')
 def display_saves():

@@ -19,6 +19,7 @@
 - Currently display saves takes you to a separate window where maps are displayed, work on this
 - make a dropdown quick access menu for favourited maps with JS *later*
 - make a popup display for roll history to display each roll with its assosiated die, presumably with JS
+- fix a bug where grid rows are separated for some unknown reason ffs ug, example map 3917643934
 
 <!-- doign this rn -->
 

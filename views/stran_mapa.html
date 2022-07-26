@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 % rebase('predloga.html', zavihek='stran_mapa', seed='map_seed')
 % if defined('map_seed'):
-%   w = str(1/x * 100)[:4] + "%"
+%   w = str(1/(1.5*x) * 100)[:4] + "%"
 %end 
 <style>
     :root{
@@ -9,7 +9,7 @@
     }
     .cell{
         width: var(--w , 50px);
-        height: var(--w, 50px);
+        padding-bottom: var(--w, 50px);
     }
 </style>
 <div id="sidebar-left" class="sidebar">
@@ -52,18 +52,18 @@
     %end
 </div>
 <div id="map">
-    <table style="width:100%;height:100%">
+    <table style="width:100%; border-collapse: unset; text-indent: 0; border-spacing:0">
         %for j in grid:
         <tr>
             %for i in j:
             %if i == 1:
-            <td class="cell platform"><span></span></td>
+            <td class="cell platform"></td>
             %elif i == 2:
-            <td class="cell begin-platform"><span></span></td>
+            <td class="cell begin-platform"></td>
             %elif i == 3:
-            <td class="cell end-platform"><span></span></td>
+            <td class="cell end-platform"></td>
             %else:
-            <td class="cell"><span></span></td>
+            <td class="cell"></td>
             %end
             %end
         </tr>
