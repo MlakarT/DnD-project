@@ -2,9 +2,7 @@
 import bottle
 from dice import Dice
 import model
-from model import Control
-from model import generator
-from model import User
+from model import Control, generator, User
 
 with open('secret.txt') as tf:
     SECRET = tf.read()
