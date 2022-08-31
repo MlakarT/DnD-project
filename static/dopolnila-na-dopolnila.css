@@ -193,6 +193,11 @@ body {
     float:left; /* temp solution but works ???? */
 }
 
+#save-button {
+    width: auto;
+    height:100%;
+}
+
 .map {
     width: calc(100% - 0.6em - 4em);
     height: calc(100% - 4em);
