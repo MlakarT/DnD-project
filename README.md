@@ -38,7 +38,7 @@ A pseudo random number generator is a type of recursive nmber generator that pro
 
 For this program, a **Linear congruetal generator** (lcg for short) was used. It is a type of recursive, modulus based pseudo number generator, that takes 4 inputs, namely: the modulus, which when dividing by prouces the final number, the multiplier and increment which regulate the recurrence of the numbers, and the seed, the initial  number, which produces the another in a recursive manor.
 
-For the purposes of this program, the Numerical Recipies lcg, which uses a modulus of $2 ^ (32)$, a multiplier of $1664525$ and an increment of $1013904223$.
+For the purposes of this program, the Numerical Recipies lcg, which uses a modulus of 2^32, a multiplier of 1664525 and an increment of 1013904223.
 
 For more information about the relevant topics, you can look up [Pseudo RNGs](https://en.wikipedia.org/wiki/Pseudorandom_number_generator), [lcgs](https://en.wikipedia.org/wiki/Linear_congruential_generator) and the [Numerical recipies lcg](https://en.wikipedia.org/wiki/Numerical_Recipes).
 
