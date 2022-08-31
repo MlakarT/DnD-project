@@ -12,10 +12,10 @@ STEPS = {
 }
 
 def generate_seed(c:int = None) -> tuple:
-    x = rd.randint(3,50)
-    y = rd.randint(2,50)
+    x = rd.randint(3,30)
+    y = rd.randint(2,30)
     while y > x:
-        y = rd.randint(2,50)
+        y = rd.randint(2,30)
     if c:
         comp = c
     else:
@@ -118,9 +118,9 @@ def draw_map(map:Map) -> None:
         print(row)
 
 """Sample code for testing purposes"""
-# x,y,c,ui = generate_seed()
-# x,y,c,ui = 49, 42, 20, 45542
-# x,y,c,ui = 39,11,6,76935
+# # x,y,c,ui = generate_seed()
+# # x,y,c,ui = 49, 42, 20, 45542
+# x,y,c,ui = 4,2,2,69365
 # SAMPLE_MAP_1 = Map(x,y,c,ui)
 # SAMPLE_MAP_1.make_seed()
 # SAMPLE_MAP_1.calc_start()
@@ -128,4 +128,4 @@ def draw_map(map:Map) -> None:
 # SAMPLE_MAP_1.prefered_steps()
 # SAMPLE_MAP_1.make_path()
 # draw_map(SAMPLE_MAP_1)
-# print(SAMPLE_MAP_1,'seed:', SAMPLE_MAP_1.seed, 'start:', SAMPLE_MAP_1.starting_x, SAMPLE_MAP_1.starting_y,'length:', SAMPLE_MAP_1.length,)
+# print(SAMPLE_MAP_1,'seed:', SAMPLE_MAP_1.seed, 'start:', SAMPLE_MAP_1.starting_x, SAMPLE_MAP_1.starting_y,'length:', SAMPLE_MAP_1.length)

@@ -1,0 +1,414 @@
+@font-face {
+    font-family: Open-sans;
+    src: url('OpenSans-VariableFont_wdth,wght.ttf');
+}
+
+body {
+    margin: 0;
+}
+.navbar {
+    position:fixed;
+    top:0;
+    background-color: #444444;
+    color:white;
+    width:100%;
+    height:5em;
+}
+.navbar-ref{
+    float: left;
+    margin-left:2em;
+    width: 20%;
+    cursor: pointer;
+}
+
+.navel {
+    float:left;
+    width:15%;
+    height: 3em;
+    color: #bebebe; /* lol -> lmao */
+    border-right: 2px solid darkgray;
+    padding: 1em;
+    font-family: Open-sans;
+    text-align: center;
+    cursor: pointer;
+}
+.navel:hover{
+    color: white;
+    text-shadow: 0 0 2px rgba(250,230,150,0.7);
+}
+
+.no-user{
+    display: none;
+    width:calc(100% - 2em);
+    height:fit-content;
+    padding:0.3em;
+    color: black;
+    text-decoration: none;
+    font-size: smaller;
+    background-color: white;
+    border-radius: 10%;
+}
+
+.navel:hover .no-user{
+    display:block
+}
+
+.user-wrapper {
+    float:right;
+    width:18%;
+    height:3em;
+    padding:1em;
+    font-family: Open-sans;
+}
+
+.user-wrapper img {
+    float:left;
+}
+
+.user-info {
+    margin-right:1em;
+    float:right;
+    height: 100%;
+}
+
+.user-info p {
+    margin: 0;
+}
+
+.user-info a {
+    margin: 0;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.navbar-gradient {
+    position: fixed;
+    width:100%;
+    height:2em;
+    background-image: linear-gradient(rgba(68,68,68,1), rgba(68,68,68,0));
+}
+
+.content-wrapper {
+    background-color: powderblue;
+    margin-top: 5em;
+    height: 800px;
+}
+
+#bcgr-img {
+    background-image:  url('fantasy_landscape_bcg.jpg');
+    background-size:cover;
+    width:100%;
+    height:100%;
+}
+
+.sidebar {
+    /* display: block;
+    position:relative; this stuff just screws up everything gosh please make it stop !!! :swearing emoji: */
+    width: 17%;
+    height: 80%;
+    margin-top: 3em;
+    background-color: rgba(80,80,80,0.7);
+    border: 2px solid gray;
+}
+.sidebar-left {
+    margin-left:1em;
+    float:left;
+}
+
+#generation {
+    padding: 1em;
+    color: white;
+    font-family: Open-sans;
+}
+
+#generate-random-button {
+    background-color: rgba(133, 136, 97, 0);
+    color:white;
+    text-decoration: underline;
+    padding: 1em 1em;
+    border: 2px solid rgba(133, 136, 97, 0);
+    border-radius: 2px;
+    transition-duration: 0.2s;
+}
+
+#generate-random-button:hover {
+    background-color: rgba(133, 136, 97, 1);
+    border: 2px solid rgba(133, 136, 97, 1);
+}
+
+#assets {
+    padding: 1em;
+    color:white;
+    font-family: Open-sans;
+}
+
+#assets p {
+    text-align: center;
+    font-size: larger;
+}
+
+.dynamic-display {
+    margin-top: 3em;
+    width: calc(66% - 8em);
+    height: 80%;
+    margin-left: 3em;
+    float:left;
+}
+
+#bulletin-board-display {
+    width: 100%;
+    height: 100%;
+}
+
+.plank {
+    display: block;
+    background-size: cover;
+}
+
+#top-plank {
+    width:100%;
+    height: 2em;
+    background-image: url('single-plank-rotated.png');
+}
+
+#left-plank {
+    width: 2em;
+    height: calc(100% - 4em);
+    margin-left: 0.3em;
+    float:left;
+    background-image: url('single-plank.jpg');
+}
+
+#right-plank {
+    width: 2em;
+    height: calc(100% - 4em);
+    background-image: url('single-plank.jpg');
+    float:left;
+}
+
+#bottom-plank {
+    width:100%;
+    height: 2em;
+    background-image: url('single-plank-rotated.png');
+    float:left; /* temp solution but works ???? */
+}
+
+.map {
+    width: calc(100% - 0.6em - 4em);
+    height: calc(100% - 4em);
+    background-color: #d0b258;
+    float:left;
+    overflow: scroll;
+} 
+
+.sidebar-right{
+    float:right;
+    margin-right:1em;
+    font-family: Open-sans;
+    color:white;
+}
+
+#user-character {
+    width: calc(90% - 2em - 4px);
+    height: 10em;
+    padding: 1em;
+    border: 2px solid black;
+    border-radius: 1em;
+    margin-left: 5%;
+    margin-top: 0.5em;
+}
+
+#history-button {
+    margin-top: 1em;
+    width: 100%;
+}
+
+#history-button a {
+    color: white; background-color: black;
+    float: right;
+    margin-right: 1em;
+}
+
+#dice-wrapper {
+    width: 10em;
+    height: 10em;
+    margin-right: 2em;
+    margin-top: 80%;
+    padding: 1em;
+}
+
+#dice-wrapper form {
+    float:right;
+    width:50%;
+    height: 50%;
+}
+
+.roll-dice-button {
+    appearance: none;
+    width: 100%;
+    height:100%;
+    padding:1em;
+    text-align: center;
+    font-size: large;
+    border: 2px solid black;
+    border-radius: 100%;
+    cursor: pointer;
+}
+
+#roll-button {
+    margin-top: 0.5em;
+    width: 100%;
+    float:right;
+}
+
+.left-display-wrapper {
+    width: fit-content;
+    max-width: calc(80% - 6em);
+    height: auto;
+    margin-top: 3em;
+    float: left;
+    margin-left: 1em;
+    padding: 2em;
+    color: white;
+    font-family: Open-sans;
+    font-size: larger;
+    background-color: rgba(80,80,80,0.7);
+    border: 2px solid gray;
+    border-radius: 2px;
+    overflow: scroll;
+}
+
+.left-display-wrapper a {
+    float: left;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.left-display-wrapper a:hover {
+    color: white;
+    text-shadow: 0 0 2px rgba(250,230,150,0.7);
+}
+
+.left-display-wrapper li {
+    margin: 1em 1em;
+}
+
+.button1 {
+    background-color: rgba(133, 136, 97, 1);
+    color:white;
+    border: 2px solid darkgray;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+.cell {
+    /*position: relative; ta stvar tukej konkretno sfuka display order */
+    display: inline-block;
+    border: 1px solid black;
+    height:0; /* jebes css kdorkol je to izumu se lah vrze v krsko nuklearko */
+}
+.platform {
+    background-color: black;
+}
+.begin-platform {
+    background-color: red;
+}
+.end-platform {
+    background-color: lightblue;
+}
+
+#existing-user {
+    float:left;
+}
+#new-user {
+    float:right;
+}
+
+.hover_bkgr{
+    background:rgba(0,0,0,.4);
+    cursor:pointer;
+    display:none;
+    height:100%;
+    position:fixed;
+    text-align:center;
+    top:0;
+    width:100%;
+    z-index:10000;
+}
+.hover_bkgr .helper{
+    display:inline-block;
+    height:100%;
+    vertical-align:middle;
+}
+.hover_bkgr > div {
+    background-color: #fff;
+    box-shadow: 10px 10px 60px #555;
+    display: inline-block;
+    height: auto;
+    max-width: 551px;
+    min-height: 100px;
+    vertical-align: middle;
+    width: 60%;
+    position: relative;
+    border-radius: 8px;
+    padding: 15px 5%;
+}
+.popupCloseButton {
+    background-color: #fff;
+    border: 3px solid #999;
+    border-radius: 50px;
+    cursor: pointer;
+    display: inline-block;
+    font-family: arial;
+    font-weight: bold;
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    font-size: 25px;
+    line-height: 30px;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+}
+.popupCloseButton:hover {
+    background-color: #ccc;
+}
+.trigger_popup {
+    cursor: pointer;
+    font-size: 20px;
+    margin: 20px;
+    display: inline-block;
+    font-weight: bold;
+}
+
+footer {
+    margin: 0;
+    height:7em;
+    background-color: black;
+    color: white;
+    font-family: Open-sans;
+    font-size: smaller;
+}
+
+#author {
+    width: 20%;
+    height: 100%;
+    float: left;
+}
+
+#how-to-ftr {
+    width: calc(70% - 2em);
+    height: fit-content;
+    float: left;
+    padding: 1em;
+}
+
+#how-to-ftr a {
+    color: red;
+    text-decoration: underline;
+}
+
+#date {
+    height: 100%;
+    float: right;
+}

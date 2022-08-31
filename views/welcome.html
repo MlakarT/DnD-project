@@ -1,22 +1,24 @@
 <!DOCTYPE html>
 % rebase('osnova.html', zavihek='welcome')
-<div id="sidebar-left" class="sidebar">
-    <div id="generate-button" style="padding:3em">
-        <form action="/display-random/" method="POST">
-            <button> Generate random map</button>
-        </form>
-    </div>
+<div class="sidebar sidebar-left">
+<div style="padding:1em"><form action="/display-random/" method="POST"><button id="generate-random-button">Generate random map</button></form></div>
 </div>
-<div id="sidebar-right" class="sidebar">
-    <div id="character">
-        <h2>user character</h2>
+<div class="sidebar sidebar-right">
+    <div id="user-character">
+        <p>User character</p>
+        <p>Coming soon!</p>
+        <p style="font-size:70%;">In the meantime, head to <a href="https://www.dndbeyond.com/" style="background-color:black; color: white;">DnD Beyond</a> for character sheets!</p>
     </div>
-    <div id="dice-box">
+    %if defined('user') and user != 'no_user':
+    <div id="history-button">
+            <a href="/display_rolls/">View roll history</a>
+    </div>
+    %end
+    <div id="dice-wrapper">
         <form action="/roll/" method="POST">
-            <label for="dice">Roll dice</label>
-            <select name="dice" id="dice">
+            <select name="dice" id="dice" class="roll-dice-button">
                 <option value="100">d100</option>
-                <option value="20" selected="true">d20</option>
+                <option value="20" selected>d20</option>
                 <option value="12">d12</option>
                 <option value="10">d10</option>
                 <option value="8">d8</option>
@@ -24,23 +26,14 @@
                 <option value="4">d4</option>
                 <option value="2">d2</option>
             </select>
-            <br>
-            <input type="submit" value="Roll">
+            <input type="submit" value="Roll" class="button1" id="roll-button">
         </form>
+        
         % if defined('roll'):
         <div id="last-rolls">
             <p> Your last roll: <strong>{{roll}}</strong></p>
-            %if defined('user') and user != 'no_user':
-            <a href="/display_rolls/">View roll history</a>
             %end
         </div>
-        % end
     </div>
 </div>
-<div id="start-display">
-    <form method="POST" action="/display-map/">
-    <input type="text" id="seed" name="seed" class="custom" minlength="10" maxlength="10" size="20" placeholder="Enter seed to begin!">
-    </form>
-</div>
-
 

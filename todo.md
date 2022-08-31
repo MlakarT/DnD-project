@@ -25,6 +25,7 @@
 
 - use [this css file](https://www.w3schools.com/w3css/4/w3.css) as ref
 - use [this page](https://bottlepy.org/docs/dev/api.html#bottle.BaseRequest.files) for bottle documentation ref
+- use [this link if it works](https://wallup.net/fantasy-landscape-art-artwork-nature-91/) as art ref
 
 ## Cool or wierd seeds i found whilst testing
 

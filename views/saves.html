@@ -1,16 +1,20 @@
 <!DOCTYPE html>
 % rebase('osnova.html', zavihek='saves')
-<div id="sidebar-right" class="sidebar">
-    <div id="character">
-        <h2>user character</h2>
+<div class="sidebar sidebar-right">
+    <div id="user-character">
+        <p>User character</p>
+        <p>Coming soon!</p>
+        <p style="font-size:70%;">In the meantime, head to <a href="https://www.dndbeyond.com/" style="background-color:black; color: white;">DnD Beyond</a> for character sheets!</p>
     </div>
 </div>
-<div>
+<div id="saved-maps" class="left-display-wrapper">
     %if len(maps) == 0:
     <p>You currently have no saved maps!</p>
     %else:
+    <ul>
         %for map in maps:
-    <a href="/map/{{map}}">{{map}}</a>
+        <li><a href="/map/{{map}}">{{map}}</a></li>
         %end
+    </ul>
     %end
 </div>
