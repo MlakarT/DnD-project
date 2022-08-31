@@ -1,14 +1,6 @@
 {
     "users": [
         {
-            "username": "mlakar",
-            "password": "pass",
-            "maps": [
-                "4714886210"
-            ],
-            "roll_history": {}
-        },
-        {
             "username": "admin",
             "password": null,
             "maps": [
@@ -148,12 +140,6 @@
                     2
                 ]
             }
-        },
-        {
-            "username": "NewUser",
-            "password": "password1",
-            "maps": [],
-            "roll_history": {}
         },
         {
             "username": "testaccount",
